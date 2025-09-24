@@ -2,39 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* AI Career Recommender Design System - Tech-inspired gradients and modern aesthetics */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Base colors - Clean modern palette */
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Card system */
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - Tech blue gradient base */
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 98%;
+    --primary-hover: 217 91% 55%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - Purple accent */
+    --secondary: 263 70% 50%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted tones */
+    --muted: 240 5% 6%;
+    --muted-foreground: 240 5% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent - Vibrant cyan */
+    --accent: 180 100% 50%;
+    --accent-foreground: 240 10% 3.9%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Status colors */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 98%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 240 10% 3.9%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Borders and inputs */
+    --border: 240 6% 10%;
+    --input: 240 6% 10%;
+    --ring: 217 91% 60%;
+
+    /* Career-specific colors */
+    --ml-engineer: 280 100% 70%;
+    --web-developer: 142 100% 50%;
+    --cloud-engineer: 200 100% 60%;
+    --cybersecurity: 0 100% 60%;
+    --data-scientist: 45 100% 50%;
+    --mobile-developer: 300 100% 50%;
+
+    /* Skill level colors */
+    --beginner: 120 100% 40%;
+    --intermediate: 45 100% 50%;
+    --advanced: 0 100% 50%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(263 70% 50%));
+    --gradient-success: linear-gradient(135deg, hsl(142 71% 45%), hsl(180 100% 50%));
+    --gradient-hero: linear-gradient(135deg, hsl(240 10% 3.9%) 0%, hsl(217 91% 60%) 50%, hsl(263 70% 50%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(240 6% 6%) 0%, hsl(240 5% 8%) 100%);
+
+    /* Shadows */
+    --shadow-primary: 0 10px 30px -10px hsl(217 91% 60% / 0.3);
+    --shadow-secondary: 0 10px 30px -10px hsl(263 70% 50% / 0.3);
+    --shadow-elevation: 0 4px 20px hsl(240 10% 3.9% / 0.5);
+
+    /* Animation variables */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --radius: 0.5rem;
 
@@ -101,5 +140,160 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    background: var(--gradient-hero);
+  }
+}
+
+@layer components {
+  /* Hero components */
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+  
+  .card-gradient {
+    background: var(--gradient-card);
+    box-shadow: var(--shadow-elevation);
+  }
+  
+  /* Career path cards */
+  .career-card {
+    @apply relative overflow-hidden rounded-xl p-6 transition-all duration-300;
+    background: var(--gradient-card);
+    border: 1px solid hsl(var(--border));
+    
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-primary);
+    }
+    
+    &[data-career="ml-engineer"] {
+      border-color: hsl(var(--ml-engineer) / 0.3);
+      &:hover { box-shadow: 0 10px 30px -10px hsl(var(--ml-engineer) / 0.4); }
+    }
+    
+    &[data-career="web-developer"] {
+      border-color: hsl(var(--web-developer) / 0.3);
+      &:hover { box-shadow: 0 10px 30px -10px hsl(var(--web-developer) / 0.4); }
+    }
+    
+    &[data-career="cloud-engineer"] {
+      border-color: hsl(var(--cloud-engineer) / 0.3);
+      &:hover { box-shadow: 0 10px 30px -10px hsl(var(--cloud-engineer) / 0.4); }
+    }
+  }
+  
+  /* Skill badges */
+  .skill-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-all;
+    
+    &[data-level="beginner"] {
+      background: hsl(var(--beginner) / 0.1);
+      color: hsl(var(--beginner));
+      border: 1px solid hsl(var(--beginner) / 0.3);
+    }
+    
+    &[data-level="intermediate"] {
+      background: hsl(var(--intermediate) / 0.1);
+      color: hsl(var(--intermediate));
+      border: 1px solid hsl(var(--intermediate) / 0.3);
+    }
+    
+    &[data-level="advanced"] {
+      background: hsl(var(--advanced) / 0.1);
+      color: hsl(var(--advanced));
+      border: 1px solid hsl(var(--advanced) / 0.3);
+    }
+  }
+  
+  /* Progress indicators */
+  .progress-node {
+    @apply w-4 h-4 rounded-full border-2 transition-all duration-300;
+    
+    &.completed {
+      background: hsl(var(--success));
+      border-color: hsl(var(--success));
+      box-shadow: 0 0 0 4px hsl(var(--success) / 0.2);
+    }
+    
+    &.current {
+      background: hsl(var(--primary));
+      border-color: hsl(var(--primary));
+      box-shadow: 0 0 0 4px hsl(var(--primary) / 0.2);
+      animation: pulse-glow 2s infinite;
+    }
+    
+    &.pending {
+      background: hsl(var(--muted));
+      border-color: hsl(var(--border));
+    }
+  }
+  
+  /* Roadmap path */
+  .roadmap-path {
+    @apply relative;
+    
+    &::before {
+      content: '';
+      @apply absolute left-8 top-0 w-0.5 h-full bg-gradient-to-b;
+      background: linear-gradient(to bottom, 
+        hsl(var(--primary)), 
+        hsl(var(--secondary)), 
+        hsl(var(--accent))
+      );
+      opacity: 0.3;
+    }
+  }
+  
+  /* Interactive animations */
+  .hover-lift {
+    transition: var(--transition-smooth);
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+  
+  .bounce-in {
+    animation: bounceIn 0.6s var(--transition-bounce);
+  }
+}
+
+@layer utilities {
+  /* Custom animations */
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 0 4px hsl(var(--primary) / 0.2);
+    }
+    50% {
+      box-shadow: 0 0 0 8px hsl(var(--primary) / 0.1);
+    }
+  }
+  
+  @keyframes bounceIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.3) translateY(20px);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    70% {
+      transform: scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 }

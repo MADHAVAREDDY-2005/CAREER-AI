@@ -1,12 +1,64 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import HeroSection from '@/components/HeroSection';
+import AssessmentForm from '@/components/AssessmentForm';
+import CareerRecommendations from '@/components/CareerRecommendations';
+import InteractiveRoadmap from '@/components/InteractiveRoadmap';
+import { AssessmentData, Career } from '@/types/career';
 
 const Index = () => {
+  const [currentStep, setCurrentStep] = useState<'hero' | 'assessment' | 'recommendations' | 'roadmap'>('hero');
+  const [assessmentData, setAssessmentData] = useState<AssessmentData | null>(null);
+  const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
+
+  const handleStartAssessment = () => {
+    setCurrentStep('assessment');
+  };
+
+  const handleAssessmentComplete = (data: AssessmentData) => {
+    setAssessmentData(data);
+    setCurrentStep('recommendations');
+  };
+
+  const handleCareerSelect = (career: Career) => {
+    setSelectedCareer(career);
+    setCurrentStep('roadmap');
+  };
+
+  const handleBackToAssessment = () => {
+    setCurrentStep('assessment');
+  };
+
+  const handleBackToRecommendations = () => {
+    setCurrentStep('recommendations');
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen">
+      {currentStep === 'hero' && (
+        <HeroSection onStartAssessment={handleStartAssessment} />
+      )}
+      
+      {currentStep === 'assessment' && (
+        <AssessmentForm 
+          onComplete={handleAssessmentComplete}
+          onBack={() => setCurrentStep('hero')}
+        />
+      )}
+      
+      {currentStep === 'recommendations' && assessmentData && (
+        <CareerRecommendations 
+          assessmentData={assessmentData}
+          onCareerSelect={handleCareerSelect}
+          onBack={handleBackToAssessment}
+        />
+      )}
+      
+      {currentStep === 'roadmap' && selectedCareer && (
+        <InteractiveRoadmap 
+          career={selectedCareer}
+          onBack={handleBackToRecommendations}
+        />
+      )}
     </div>
   );
 };
