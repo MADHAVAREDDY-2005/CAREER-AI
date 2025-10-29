@@ -1,3 +1,8 @@
+/* ================================================
+   AI CAREER RECOMMENDER - GLOBAL STYLES
+   Clean, modern white background theme
+   ================================================ */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,46 +11,46 @@
 
 @layer base {
   :root {
-    /* Base colors - Clean modern palette */
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    /* Base colors - Clean white background theme */
+    --background: 0 0% 100%;           /* Pure white background */
+    --foreground: 222.2 84% 4.9%;      /* Dark text */
 
-    /* Card system */
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    /* Card system - white with shadow */
+    --card: 0 0% 100%;                 /* White cards */
+    --card-foreground: 222.2 84% 4.9%; /* Dark text on cards */
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;              /* White popover */
+    --popover-foreground: 222.2 84% 4.9%; /* Dark text */
 
-    /* Primary - Tech blue gradient base */
+    /* Primary - Vibrant blue */
     --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 98%;
+    --primary-foreground: 0 0% 100%;   /* White text on primary */
     --primary-hover: 217 91% 55%;
 
     /* Secondary - Purple accent */
     --secondary: 263 70% 50%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary-foreground: 0 0% 100%; /* White text on secondary */
 
-    /* Muted tones */
-    --muted: 240 5% 6%;
-    --muted-foreground: 240 5% 65%;
+    /* Muted tones - Light gray */
+    --muted: 210 40% 96.1%;            /* Light gray background */
+    --muted-foreground: 215.4 16.3% 46.9%; /* Medium gray text */
 
-    /* Accent - Vibrant cyan */
-    --accent: 180 100% 50%;
-    --accent-foreground: 240 10% 3.9%;
+    /* Accent - Teal */
+    --accent: 173 80% 40%;
+    --accent-foreground: 0 0% 100%;    /* White text on accent */
 
     /* Status colors */
     --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 0 0% 100%;
     --success: 142 71% 45%;
-    --success-foreground: 0 0% 98%;
+    --success-foreground: 0 0% 100%;
     --warning: 38 92% 50%;
-    --warning-foreground: 240 10% 3.9%;
+    --warning-foreground: 0 0% 100%;
 
-    /* Borders and inputs */
-    --border: 240 6% 10%;
-    --input: 240 6% 10%;
-    --ring: 217 91% 60%;
+    /* Borders and inputs - Light gray */
+    --border: 214.3 31.8% 91.4%;       /* Light gray border */
+    --input: 214.3 31.8% 91.4%;        /* Light gray input border */
+    --ring: 217 91% 60%;               /* Blue focus ring */
 
     /* Career-specific colors */
     --ml-engineer: 280 100% 70%;
@@ -60,16 +65,16 @@
     --intermediate: 45 100% 50%;
     --advanced: 0 100% 50%;
 
-    /* Gradients */
+    /* Gradients - Light white theme */
     --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(263 70% 50%));
-    --gradient-success: linear-gradient(135deg, hsl(142 71% 45%), hsl(180 100% 50%));
-    --gradient-hero: linear-gradient(135deg, hsl(240 10% 3.9%) 0%, hsl(217 91% 60%) 50%, hsl(263 70% 50%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(240 6% 6%) 0%, hsl(240 5% 8%) 100%);
+    --gradient-success: linear-gradient(135deg, hsl(142 71% 45%), hsl(173 80% 40%));
+    --gradient-hero: linear-gradient(135deg, hsl(210 40% 98%) 0%, hsl(217 91% 95%) 50%, hsl(263 70% 95%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(210 40% 98%) 100%);
 
-    /* Shadows */
-    --shadow-primary: 0 10px 30px -10px hsl(217 91% 60% / 0.3);
-    --shadow-secondary: 0 10px 30px -10px hsl(263 70% 50% / 0.3);
-    --shadow-elevation: 0 4px 20px hsl(240 10% 3.9% / 0.5);
+    /* Shadows - Soft on white */
+    --shadow-primary: 0 10px 30px -10px hsl(217 91% 60% / 0.25);
+    --shadow-secondary: 0 10px 30px -10px hsl(263 70% 50% / 0.25);
+    --shadow-elevation: 0 4px 20px hsl(222.2 84% 4.9% / 0.08);
 
     /* Animation variables */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -98,26 +103,32 @@
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    /* Card colors - Subtle shadow on white */
+    --card: 0 0% 100%;                 /* White cards */
+    --card-foreground: 222.2 84% 4.9%; /* Dark text on cards */
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    /* Popover colors */
+    --popover: 0 0% 100%;              /* White popover */
+    --popover-foreground: 222.2 84% 4.9%; /* Dark text */
 
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    /* Secondary color - Purple accent */
+    --secondary: 262.1 83.3% 57.8%;    /* Vibrant purple */
+    --secondary-foreground: 0 0% 100%; /* White text on secondary */
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    /* Muted colors - Subtle gray */
+    --muted: 210 40% 96.1%;            /* Light gray background */
+    --muted-foreground: 215.4 16.3% 46.9%; /* Medium gray text */
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    /* Accent color - Teal */
+    --accent: 173 80% 40%;             /* Teal accent */
+    --accent-foreground: 0 0% 100%;    /* White text on accent */
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    /* Destructive/Error color */
+    --destructive: 0 84.2% 60.2%;      /* Red */
+    --destructive-foreground: 0 0% 100%; /* White text */
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
