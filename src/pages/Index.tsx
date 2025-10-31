@@ -2,7 +2,7 @@ import { useState } from 'react';
 import HeroSection from '@/components/HeroSection';
 import AssessmentForm from '@/components/AssessmentForm';
 import CareerRecommendations from '@/components/CareerRecommendations';
-import InteractiveRoadmap from '@/components/InteractiveRoadmap';
+import CandyRoadMap from '@/components/CandyRoadMap';
 import { AssessmentData, Career } from '@/types/career';
 
 const Index = () => {
@@ -54,7 +54,7 @@ const Index = () => {
       )}
       
       {currentStep === 'roadmap' && selectedCareer && (
-        <InteractiveRoadmap 
+        <CandyRoadMap 
           career={selectedCareer}
           onBack={handleBackToRecommendations}
         />
