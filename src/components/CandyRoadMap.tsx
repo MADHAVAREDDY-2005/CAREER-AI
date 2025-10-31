@@ -186,6 +186,10 @@ const CandyRoadMap = ({ career, onBack }: CandyRoadMapProps) => {
   });
 
   const [showCompletionModal, setShowCompletionModal] = useState(false);
+  const [isRoadmapLocked, setIsRoadmapLocked] = useState(false);
+
+  // Check if user has started this roadmap (has any progress)
+  const hasStartedRoadmap = progress.completedNodeIds.length > 0;
 
   // Save progress to localStorage whenever it changes
   useEffect(() => {
@@ -193,7 +197,20 @@ const CandyRoadMap = ({ career, onBack }: CandyRoadMapProps) => {
     const allProgress: RoadmapProgress[] = stored ? JSON.parse(stored) : [];
     const otherProgress = allProgress.filter(p => p.careerId !== career.id);
     localStorage.setItem(STORAGE_KEY, JSON.stringify([...otherProgress, progress]));
+
+    // Set active career lock when user starts making progress
+    if (progress.completedNodeIds.length > 0) {
+      localStorage.setItem('active_career_id', career.id.toString());
+    }
   }, [progress, career.id]);
+
+  // Check if another career is locked
+  useEffect(() => {
+    const activeCareer = localStorage.getItem('active_career_id');
+    if (activeCareer && activeCareer !== career.id.toString()) {
+      setIsRoadmapLocked(true);
+    }
+  }, [career.id]);
 
   // Mark node as complete
   const completeNode = (nodeId: string) => {
@@ -220,6 +237,8 @@ const CandyRoadMap = ({ career, onBack }: CandyRoadMapProps) => {
     // Check if all nodes completed
     if (percentComplete === 100) {
       setShowCompletionModal(true);
+      // Clear the career lock when roadmap is completed
+      localStorage.removeItem('active_career_id');
     }
 
     setSelectedNode(null);
@@ -249,24 +268,25 @@ const CandyRoadMap = ({ career, onBack }: CandyRoadMapProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-white p-6">
+    <div className="min-h-screen bg-gradient-to-b from-sky-200 via-sky-100 to-green-100 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <Button 
             variant="outline" 
             onClick={onBack}
-            className="border-2 hover:bg-primary/5"
+            className="border-2 hover:bg-primary/5 bg-white"
+            disabled={hasStartedRoadmap}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
+            {hasStartedRoadmap ? 'Complete to Go Back' : 'Back'}
           </Button>
-          <h1 className="text-3xl font-bold text-foreground">{career.title} Journey</h1>
+          <h1 className="text-3xl font-bold text-foreground drop-shadow-sm">{career.title} Journey</h1>
           <div className="w-20"></div>
         </div>
 
         {/* Progress Card */}
-        <Card className="p-6 mb-12 border-2 shadow-lg">
+        <Card className="p-6 mb-12 border-2 shadow-lg bg-white/95 backdrop-blur">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -276,6 +296,11 @@ const CandyRoadMap = ({ career, onBack }: CandyRoadMapProps) => {
               <p className="text-muted-foreground mt-1">
                 {progress.completedNodeIds.length} of {nodes.length} steps completed
               </p>
+              {hasStartedRoadmap && (
+                <p className="text-xs text-amber-600 mt-2 font-medium">
+                  🔒 Complete this roadmap to explore other careers
+                </p>
+              )}
             </div>
             <div className="text-right">
               <div className="text-5xl font-bold text-primary">{progress.percentComplete}%</div>
@@ -284,107 +309,94 @@ const CandyRoadMap = ({ career, onBack }: CandyRoadMapProps) => {
           <Progress value={progress.percentComplete} className="h-4" />
         </Card>
 
-        {/* Candy Crush Style Roadmap */}
+        {/* Realistic Roadmap */}
         <div className="relative">
-          {/* Background decorations */}
+          {/* Realistic Background Decorations */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            {[...Array(6)].map((_, i) => (
-              <div
-                key={`tree-${i}`}
-                className="absolute text-6xl"
-                style={{
-                  left: `${10 + i * 15}%`,
-                  top: `${20 + (i % 2) * 30}%`,
-                  transform: 'rotate(-5deg)'
-                }}
-              >
-                🌳
-              </div>
-            ))}
-            {[...Array(8)].map((_, i) => (
-              <div
-                key={`flower-${i}`}
-                className="absolute text-4xl"
-                style={{
-                  left: `${15 + i * 12}%`,
-                  top: `${10 + (i % 3) * 25}%`
-                }}
-              >
-                🌸
-              </div>
-            ))}
+            {/* Left side trees */}
+            <div className="absolute left-4 top-20 text-6xl opacity-80">🌲</div>
+            <div className="absolute left-8 top-96 text-5xl opacity-70">🏠</div>
+            <div className="absolute left-6 top-[600px] text-6xl opacity-75">🌳</div>
+            <div className="absolute left-10 top-[900px] text-5xl opacity-80">🏪</div>
+            <div className="absolute left-4 top-[1200px] text-6xl opacity-70">🌲</div>
+            <div className="absolute left-8 top-[1500px] text-5xl opacity-75">🏢</div>
+            
+            {/* Right side decorations */}
+            <div className="absolute right-4 top-40 text-6xl opacity-75">🌳</div>
+            <div className="absolute right-6 top-[500px] text-5xl opacity-80">🏫</div>
+            <div className="absolute right-8 top-[800px] text-6xl opacity-70">🌲</div>
+            <div className="absolute right-4 top-[1100px] text-5xl opacity-75">🏛️</div>
+            <div className="absolute right-6 top-[1400px] text-6xl opacity-80">🌳</div>
           </div>
 
-          {/* Road path */}
-          <div className="relative z-10 min-h-screen">
-            <svg className="absolute inset-0 w-full h-full" style={{ minHeight: `${nodes.length * 150}px` }}>
-              <defs>
-                <pattern id="road-pattern" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse">
-                  <line x1="10" y1="0" x2="10" y2="40" stroke="white" strokeWidth="4" strokeDasharray="20,20" />
-                </pattern>
-              </defs>
-              <path
-                d={`M 50,50 Q 400,150 300,300 T 500,600 Q 600,750 400,900 T 300,${nodes.length * 150 - 100}`}
-                stroke="#1a1a1a"
-                strokeWidth="120"
-                fill="none"
-                opacity="0.15"
-              />
-              <path
-                d={`M 50,50 Q 400,150 300,300 T 500,600 Q 600,750 400,900 T 300,${nodes.length * 150 - 100}`}
-                stroke="url(#road-pattern)"
-                strokeWidth="6"
-                fill="none"
-              />
-            </svg>
+          {/* Road Container */}
+          <div className="relative z-10 flex justify-center">
+            <div className="relative" style={{ width: '200px', minHeight: `${nodes.length * 180 + 200}px` }}>
+              {/* Black Road with White Dashed Line */}
+              <div 
+                className="absolute left-1/2 transform -translate-x-1/2 bg-gray-800 shadow-2xl"
+                style={{ 
+                  width: '180px',
+                  height: `${nodes.length * 180 + 100}px`,
+                  top: '0',
+                  borderRadius: '20px'
+                }}
+              >
+                {/* White dashed center line */}
+                <svg className="absolute inset-0 w-full h-full">
+                  <line
+                    x1="50%"
+                    y1="0"
+                    x2="50%"
+                    y2="100%"
+                    stroke="white"
+                    strokeWidth="4"
+                    strokeDasharray="30,20"
+                    opacity="0.8"
+                  />
+                </svg>
+              </div>
 
-            {/* Roadmap nodes */}
-            <div className="relative" style={{ minHeight: `${nodes.length * 150}px` }}>
+              {/* Roadmap Nodes - Centered on Road */}
               {nodes.map((node, index) => {
                 const status = getNodeStatus(node.id);
                 const isClickable = status !== 'locked';
-                
-                // Calculate position along the curved path
-                const progress = index / Math.max(nodes.length - 1, 1);
-                const xOffset = 50 + Math.sin(progress * Math.PI * 3) * 300;
-                const yOffset = 50 + index * 150;
+                const yOffset = 80 + index * 180;
 
                 return (
                   <motion.div
                     key={node.id}
-                    className="absolute"
+                    className="absolute left-1/2 transform -translate-x-1/2"
                     style={{
-                      left: `${xOffset}px`,
                       top: `${yOffset}px`,
-                      transform: 'translate(-50%, -50%)'
                     }}
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: index * 0.1, duration: 0.3 }}
+                    transition={{ delay: index * 0.08, duration: 0.3 }}
                   >
                     <motion.button
                       onClick={() => isClickable && setSelectedNode(node)}
                       disabled={!isClickable}
                       className={`relative ${isClickable ? 'cursor-pointer' : 'cursor-not-allowed'}`}
-                      whileHover={isClickable ? { scale: 1.1 } : {}}
-                      whileTap={isClickable ? { scale: 0.95 } : {}}
+                      whileHover={isClickable ? { scale: 1.15 } : {}}
+                      whileTap={isClickable ? { scale: 0.9 } : {}}
                     >
                       {/* Node circle */}
                       <div
-                        className={`w-24 h-24 rounded-full flex items-center justify-center shadow-2xl border-4 border-white transition-all ${
+                        className={`w-28 h-28 rounded-full flex items-center justify-center shadow-2xl border-4 border-white transition-all ${
                           status === 'completed'
                             ? 'bg-gradient-to-br from-green-400 to-green-600'
                             : status === 'current'
                             ? getNodeColor(node)
-                            : 'bg-gray-300'
+                            : 'bg-gray-400'
                         }`}
                       >
                         {status === 'completed' ? (
-                          <CheckCircle2 className="w-12 h-12 text-white" />
+                          <CheckCircle2 className="w-14 h-14 text-white drop-shadow-lg" />
                         ) : status === 'locked' ? (
-                          <Lock className="w-10 h-10 text-gray-500" />
+                          <Lock className="w-12 h-12 text-gray-600" />
                         ) : (
-                          <div className="text-white text-center">
+                          <div className="text-4xl">
                             {node.type === 'skill' ? '📚' : '💻'}
                           </div>
                         )}
@@ -393,15 +405,15 @@ const CandyRoadMap = ({ career, onBack }: CandyRoadMapProps) => {
                       {/* Glowing effect for current node */}
                       {status === 'current' && (
                         <motion.div
-                          className="absolute inset-0 rounded-full bg-primary/30"
-                          animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0, 0.5] }}
+                          className="absolute inset-0 rounded-full bg-yellow-400/40"
+                          animate={{ scale: [1, 1.4, 1], opacity: [0.6, 0, 0.6] }}
                           transition={{ duration: 2, repeat: Infinity }}
                         />
                       )}
 
                       {/* Node label */}
-                      <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-40 text-center">
-                        <p className="font-semibold text-sm text-foreground line-clamp-2">
+                      <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-44 text-center bg-white/90 backdrop-blur px-3 py-2 rounded-lg shadow-md">
+                        <p className="font-bold text-sm text-foreground line-clamp-2">
                           {node.title}
                         </p>
                         <Badge variant="secondary" className="mt-1 text-xs">
@@ -429,8 +441,13 @@ const CandyRoadMap = ({ career, onBack }: CandyRoadMapProps) => {
                 </DialogHeader>
 
                 <div className="space-y-6">
-                  {/* Description */}
-                  <p className="text-muted-foreground">{selectedNode.description}</p>
+                  {/* Theory Section */}
+                  <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+                    <h3 className="font-bold text-blue-900 mb-2 flex items-center gap-2">
+                      📖 What You'll Learn
+                    </h3>
+                    <p className="text-blue-800 leading-relaxed">{selectedNode.description}</p>
+                  </div>
 
                   {/* Estimated time */}
                   {selectedNode.estimatedHours && (
