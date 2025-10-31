@@ -309,122 +309,237 @@ const CandyRoadMap = ({ career, onBack }: CandyRoadMapProps) => {
           <Progress value={progress.percentComplete} className="h-4" />
         </Card>
 
-        {/* Realistic Roadmap */}
-        <div className="relative">
-          {/* Realistic Background Decorations */}
+        {/* 3D Mountain Road Roadmap */}
+        <div className="relative min-h-[3000px]">
+          {/* Realistic Background with Green Grass and Trees */}
+          <div className="absolute inset-0 bg-gradient-to-b from-green-200 via-green-100 to-green-50 pointer-events-none"></div>
+          
+          {/* Realistic Decorations along the road */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            {/* Left side trees */}
-            <div className="absolute left-4 top-20 text-6xl opacity-80">🌲</div>
-            <div className="absolute left-8 top-96 text-5xl opacity-70">🏠</div>
-            <div className="absolute left-6 top-[600px] text-6xl opacity-75">🌳</div>
-            <div className="absolute left-10 top-[900px] text-5xl opacity-80">🏪</div>
-            <div className="absolute left-4 top-[1200px] text-6xl opacity-70">🌲</div>
-            <div className="absolute left-8 top-[1500px] text-5xl opacity-75">🏢</div>
+            {/* Left side - realistic trees and buildings */}
+            <div className="absolute left-[10%] top-20 text-7xl opacity-90 drop-shadow-2xl">🌲</div>
+            <div className="absolute left-[8%] top-80 text-7xl opacity-85">🌲</div>
+            <div className="absolute left-[12%] top-[400px] text-6xl opacity-80">🏠</div>
+            <div className="absolute left-[5%] top-[600px] text-7xl opacity-90">🌳</div>
+            <div className="absolute left-[10%] top-[800px] text-7xl opacity-85">🌲</div>
+            <div className="absolute left-[8%] top-[1000px] text-6xl opacity-80">🏪</div>
+            <div className="absolute left-[12%] top-[1200px] text-7xl opacity-90">🌲</div>
+            <div className="absolute left-[6%] top-[1400px] text-7xl opacity-85">🌳</div>
+            <div className="absolute left-[10%] top-[1600px] text-6xl opacity-80">🏢</div>
+            <div className="absolute left-[8%] top-[1800px] text-7xl opacity-90">🌲</div>
+            <div className="absolute left-[12%] top-[2000px] text-7xl opacity-85">🌳</div>
+            <div className="absolute left-[7%] top-[2200px] text-6xl opacity-80">🏛️</div>
+            <div className="absolute left-[10%] top-[2400px] text-7xl opacity-90">🌲</div>
             
-            {/* Right side decorations */}
-            <div className="absolute right-4 top-40 text-6xl opacity-75">🌳</div>
-            <div className="absolute right-6 top-[500px] text-5xl opacity-80">🏫</div>
-            <div className="absolute right-8 top-[800px] text-6xl opacity-70">🌲</div>
-            <div className="absolute right-4 top-[1100px] text-5xl opacity-75">🏛️</div>
-            <div className="absolute right-6 top-[1400px] text-6xl opacity-80">🌳</div>
+            {/* Right side - realistic trees and buildings */}
+            <div className="absolute right-[10%] top-40 text-7xl opacity-90 drop-shadow-2xl">🌳</div>
+            <div className="absolute right-[8%] top-[300px] text-7xl opacity-85">🌲</div>
+            <div className="absolute right-[12%] top-[500px] text-6xl opacity-80">🏫</div>
+            <div className="absolute right-[6%] top-[700px] text-7xl opacity-90">🌳</div>
+            <div className="absolute right-[10%] top-[900px] text-7xl opacity-85">🌲</div>
+            <div className="absolute right-[8%] top-[1100px] text-6xl opacity-80">🏠</div>
+            <div className="absolute right-[12%] top-[1300px] text-7xl opacity-90">🌳</div>
+            <div className="absolute right-[7%] top-[1500px] text-7xl opacity-85">🌲</div>
+            <div className="absolute right-[10%] top-[1700px] text-6xl opacity-80">🏛️</div>
+            <div className="absolute right-[8%] top-[1900px] text-7xl opacity-90">🌳</div>
+            <div className="absolute right-[12%] top-[2100px] text-7xl opacity-85">🌲</div>
+            <div className="absolute right-[6%] top-[2300px] text-6xl opacity-80">🏪</div>
+            <div className="absolute right-[10%] top-[2500px] text-7xl opacity-90">🌳</div>
           </div>
 
-          {/* Road Container */}
-          <div className="relative z-10 flex justify-center">
-            <div className="relative" style={{ width: '200px', minHeight: `${nodes.length * 180 + 200}px` }}>
-              {/* Black Road with White Dashed Line */}
-              <div 
-                className="absolute left-1/2 transform -translate-x-1/2 bg-gray-800 shadow-2xl"
-                style={{ 
-                  width: '180px',
-                  height: `${nodes.length * 180 + 100}px`,
-                  top: '0',
-                  borderRadius: '20px'
-                }}
-              >
-                {/* White dashed center line */}
-                <svg className="absolute inset-0 w-full h-full">
-                  <line
-                    x1="50%"
-                    y1="0"
-                    x2="50%"
-                    y2="100%"
-                    stroke="white"
-                    strokeWidth="4"
-                    strokeDasharray="30,20"
-                    opacity="0.8"
-                  />
-                </svg>
-              </div>
+          {/* 3D Curved Mountain Road */}
+          <div className="relative z-10">
+            <svg 
+              width="100%" 
+              height={nodes.length * 200 + 400}
+              className="absolute top-0 left-0"
+              style={{ minHeight: '2800px' }}
+            >
+              <defs>
+                {/* Road gradient for 3D effect */}
+                <linearGradient id="roadGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style={{ stopColor: '#1a1a1a', stopOpacity: 1 }} />
+                  <stop offset="30%" style={{ stopColor: '#2d2d2d', stopOpacity: 1 }} />
+                  <stop offset="50%" style={{ stopColor: '#3a3a3a', stopOpacity: 1 }} />
+                  <stop offset="70%" style={{ stopColor: '#2d2d2d', stopOpacity: 1 }} />
+                  <stop offset="100%" style={{ stopColor: '#1a1a1a', stopOpacity: 1 }} />
+                </linearGradient>
+                
+                {/* Shadow for depth */}
+                <filter id="roadShadow">
+                  <feGaussianBlur in="SourceAlpha" stdDeviation="8"/>
+                  <feOffset dx="0" dy="8" result="offsetblur"/>
+                  <feComponentTransfer>
+                    <feFuncA type="linear" slope="0.5"/>
+                  </feComponentTransfer>
+                  <feMerge>
+                    <feMergeNode/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
 
-              {/* Roadmap Nodes - Centered on Road */}
-              {nodes.map((node, index) => {
-                const status = getNodeStatus(node.id);
-                const isClickable = status !== 'locked';
-                const yOffset = 80 + index * 180;
+              {/* Main curved road path - winding mountain road */}
+              <path
+                d={`M ${window.innerWidth * 0.7} 100 
+                   Q ${window.innerWidth * 0.6} 250, ${window.innerWidth * 0.5} 400
+                   Q ${window.innerWidth * 0.35} 600, ${window.innerWidth * 0.45} 800
+                   Q ${window.innerWidth * 0.55} 1000, ${window.innerWidth * 0.4} 1200
+                   Q ${window.innerWidth * 0.25} 1400, ${window.innerWidth * 0.5} 1600
+                   Q ${window.innerWidth * 0.65} 1800, ${window.innerWidth * 0.5} 2000
+                   Q ${window.innerWidth * 0.35} 2200, ${window.innerWidth * 0.5} 2400
+                   Q ${window.innerWidth * 0.6} 2600, ${window.innerWidth * 0.5} 2800`}
+                stroke="url(#roadGradient)"
+                strokeWidth="160"
+                fill="none"
+                strokeLinecap="round"
+                filter="url(#roadShadow)"
+                className="drop-shadow-2xl"
+              />
 
-                return (
-                  <motion.div
-                    key={node.id}
-                    className="absolute left-1/2 transform -translate-x-1/2"
-                    style={{
-                      top: `${yOffset}px`,
-                    }}
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: index * 0.08, duration: 0.3 }}
+              {/* White dashed center line */}
+              <path
+                d={`M ${window.innerWidth * 0.7} 100 
+                   Q ${window.innerWidth * 0.6} 250, ${window.innerWidth * 0.5} 400
+                   Q ${window.innerWidth * 0.35} 600, ${window.innerWidth * 0.45} 800
+                   Q ${window.innerWidth * 0.55} 1000, ${window.innerWidth * 0.4} 1200
+                   Q ${window.innerWidth * 0.25} 1400, ${window.innerWidth * 0.5} 1600
+                   Q ${window.innerWidth * 0.65} 1800, ${window.innerWidth * 0.5} 2000
+                   Q ${window.innerWidth * 0.35} 2200, ${window.innerWidth * 0.5} 2400
+                   Q ${window.innerWidth * 0.6} 2600, ${window.innerWidth * 0.5} 2800`}
+                stroke="white"
+                strokeWidth="6"
+                fill="none"
+                strokeDasharray="40,30"
+                strokeLinecap="round"
+                opacity="0.9"
+              />
+            </svg>
+
+            {/* Roadmap Nodes positioned along the curved road */}
+            {nodes.map((node, index) => {
+              const status = getNodeStatus(node.id);
+              const isClickable = status !== 'locked';
+              
+              // Calculate position along the curved path
+              const progress = index / (nodes.length - 1);
+              const pathPoints = [
+                { x: window.innerWidth * 0.7, y: 100 },
+                { x: window.innerWidth * 0.5, y: 400 },
+                { x: window.innerWidth * 0.45, y: 800 },
+                { x: window.innerWidth * 0.4, y: 1200 },
+                { x: window.innerWidth * 0.5, y: 1600 },
+                { x: window.innerWidth * 0.5, y: 2000 },
+                { x: window.innerWidth * 0.5, y: 2400 },
+                { x: window.innerWidth * 0.5, y: 2800 }
+              ];
+              
+              const segmentIndex = Math.floor(progress * (pathPoints.length - 1));
+              const segmentProgress = (progress * (pathPoints.length - 1)) - segmentIndex;
+              const startPoint = pathPoints[Math.min(segmentIndex, pathPoints.length - 1)];
+              const endPoint = pathPoints[Math.min(segmentIndex + 1, pathPoints.length - 1)];
+              
+              const xPos = startPoint.x + (endPoint.x - startPoint.x) * segmentProgress;
+              const yPos = startPoint.y + (endPoint.y - startPoint.y) * segmentProgress;
+
+              return (
+                <motion.div
+                  key={node.id}
+                  className="absolute"
+                  style={{
+                    left: `${xPos}px`,
+                    top: `${yPos}px`,
+                    transform: 'translate(-50%, -50%)',
+                  }}
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: index * 0.1, duration: 0.4 }}
+                >
+                  <motion.button
+                    onClick={() => isClickable && setSelectedNode(node)}
+                    disabled={!isClickable}
+                    className={`relative ${isClickable ? 'cursor-pointer' : 'cursor-not-allowed'}`}
+                    whileHover={isClickable ? { scale: 1.2 } : {}}
+                    whileTap={isClickable ? { scale: 0.95 } : {}}
                   >
-                    <motion.button
-                      onClick={() => isClickable && setSelectedNode(node)}
-                      disabled={!isClickable}
-                      className={`relative ${isClickable ? 'cursor-pointer' : 'cursor-not-allowed'}`}
-                      whileHover={isClickable ? { scale: 1.15 } : {}}
-                      whileTap={isClickable ? { scale: 0.9 } : {}}
-                    >
-                      {/* Node circle */}
+                    {/* 3D Node with depth */}
+                    <div className="relative">
+                      {/* Shadow layer for 3D effect */}
+                      <div className="absolute inset-0 bg-black/30 rounded-full blur-xl transform translate-y-2"></div>
+                      
+                      {/* Main node */}
                       <div
-                        className={`w-28 h-28 rounded-full flex items-center justify-center shadow-2xl border-4 border-white transition-all ${
+                        className={`relative w-32 h-32 rounded-full flex items-center justify-center border-4 border-white transition-all ${
                           status === 'completed'
-                            ? 'bg-gradient-to-br from-green-400 to-green-600'
+                            ? 'bg-gradient-to-br from-green-400 via-green-500 to-green-700 shadow-2xl shadow-green-500/50'
                             : status === 'current'
-                            ? getNodeColor(node)
-                            : 'bg-gray-400'
+                            ? `${getNodeColor(node)} shadow-2xl shadow-amber-500/50`
+                            : 'bg-gradient-to-br from-gray-400 to-gray-600 shadow-xl'
                         }`}
+                        style={{
+                          boxShadow: status === 'current' 
+                            ? '0 20px 60px -15px rgba(251, 191, 36, 0.6), inset 0 2px 4px rgba(255,255,255,0.3)' 
+                            : '0 20px 40px -15px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.2)'
+                        }}
                       >
+                        {/* Inner glow */}
+                        <div className="absolute inset-2 bg-white/20 rounded-full blur-sm"></div>
+                        
                         {status === 'completed' ? (
-                          <CheckCircle2 className="w-14 h-14 text-white drop-shadow-lg" />
+                          <CheckCircle2 className="relative z-10 w-16 h-16 text-white drop-shadow-2xl" />
                         ) : status === 'locked' ? (
-                          <Lock className="w-12 h-12 text-gray-600" />
+                          <Lock className="relative z-10 w-14 h-14 text-gray-700" />
                         ) : (
-                          <div className="text-4xl">
+                          <div className="relative z-10 text-5xl drop-shadow-lg">
                             {node.type === 'skill' ? '📚' : '💻'}
                           </div>
                         )}
                       </div>
+                    </div>
 
-                      {/* Glowing effect for current node */}
-                      {status === 'current' && (
+                    {/* Glowing pulse animation for current node */}
+                    {status === 'current' && (
+                      <>
                         <motion.div
-                          className="absolute inset-0 rounded-full bg-yellow-400/40"
-                          animate={{ scale: [1, 1.4, 1], opacity: [0.6, 0, 0.6] }}
+                          className="absolute inset-0 rounded-full bg-yellow-400/40 blur-xl"
+                          animate={{ 
+                            scale: [1, 1.5, 1], 
+                            opacity: [0.5, 0, 0.5] 
+                          }}
                           transition={{ duration: 2, repeat: Infinity }}
                         />
-                      )}
+                        <motion.div
+                          className="absolute inset-0 rounded-full border-4 border-yellow-400"
+                          animate={{ 
+                            scale: [1, 1.3, 1], 
+                            opacity: [1, 0, 1] 
+                          }}
+                          transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                        />
+                      </>
+                    )}
 
-                      {/* Node label */}
-                      <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-44 text-center bg-white/90 backdrop-blur px-3 py-2 rounded-lg shadow-md">
-                        <p className="font-bold text-sm text-foreground line-clamp-2">
-                          {node.title}
-                        </p>
-                        <Badge variant="secondary" className="mt-1 text-xs">
-                          {node.type === 'skill' ? '📖 Skill' : '🎯 Project'}
-                        </Badge>
-                      </div>
-                    </motion.button>
-                  </motion.div>
-                );
-              })}
-            </div>
+                    {/* Node label with 3D effect */}
+                    <div 
+                      className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-48 text-center bg-white backdrop-blur px-4 py-3 rounded-xl shadow-2xl border-2 border-gray-200"
+                      style={{
+                        boxShadow: '0 10px 30px -10px rgba(0,0,0,0.3)',
+                      }}
+                    >
+                      <p className="font-bold text-sm text-foreground line-clamp-2 mb-1">
+                        {node.title}
+                      </p>
+                      <Badge 
+                        variant="secondary" 
+                        className="text-xs shadow-sm"
+                      >
+                        {node.type === 'skill' ? '📖 Skill' : '🎯 Project'}
+                      </Badge>
+                    </div>
+                  </motion.button>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 
