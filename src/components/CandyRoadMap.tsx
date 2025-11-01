@@ -465,32 +465,32 @@ const CandyRoadMap = ({ career, onBack }: CandyRoadMapProps) => {
                     {/* 3D Node with depth */}
                     <div className="relative">
                       {/* Shadow layer for 3D effect */}
-                      <div className="absolute inset-0 bg-black/30 rounded-full blur-xl transform translate-y-2"></div>
+                      <div className="absolute inset-0 bg-black/30 rounded-full blur-lg transform translate-y-1"></div>
                       
-                      {/* Main node */}
+                      {/* Main node - medium sized */}
                       <div
-                        className={`relative w-32 h-32 rounded-full flex items-center justify-center border-4 border-white transition-all ${
+                        className={`relative w-16 h-16 rounded-full flex items-center justify-center border-3 border-white transition-all ${
                           status === 'completed'
-                            ? 'bg-gradient-to-br from-green-400 via-green-500 to-green-700 shadow-2xl shadow-green-500/50'
+                            ? 'bg-gradient-to-br from-green-400 via-green-500 to-green-700 shadow-xl shadow-green-500/50'
                             : status === 'current'
-                            ? `${getNodeColor(node)} shadow-2xl shadow-amber-500/50`
-                            : 'bg-gradient-to-br from-gray-400 to-gray-600 shadow-xl'
+                            ? `${getNodeColor(node)} shadow-xl shadow-amber-500/50`
+                            : 'bg-gradient-to-br from-gray-400 to-gray-600 shadow-lg'
                         }`}
                         style={{
                           boxShadow: status === 'current' 
-                            ? '0 20px 60px -15px rgba(251, 191, 36, 0.6), inset 0 2px 4px rgba(255,255,255,0.3)' 
-                            : '0 20px 40px -15px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.2)'
+                            ? '0 10px 30px -10px rgba(251, 191, 36, 0.6), inset 0 2px 4px rgba(255,255,255,0.3)' 
+                            : '0 10px 20px -10px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.2)'
                         }}
                       >
                         {/* Inner glow */}
-                        <div className="absolute inset-2 bg-white/20 rounded-full blur-sm"></div>
+                        <div className="absolute inset-1 bg-white/20 rounded-full blur-sm"></div>
                         
                         {status === 'completed' ? (
-                          <CheckCircle2 className="relative z-10 w-16 h-16 text-white drop-shadow-2xl" />
+                          <CheckCircle2 className="relative z-10 w-8 h-8 text-white drop-shadow-lg" />
                         ) : status === 'locked' ? (
-                          <Lock className="relative z-10 w-14 h-14 text-gray-700" />
+                          <Lock className="relative z-10 w-7 h-7 text-gray-700" />
                         ) : (
-                          <div className="relative z-10 text-5xl drop-shadow-lg">
+                          <div className="relative z-10 text-2xl drop-shadow-lg">
                             {node.type === 'skill' ? '📚' : '💻'}
                           </div>
                         )}
@@ -509,7 +509,7 @@ const CandyRoadMap = ({ career, onBack }: CandyRoadMapProps) => {
                           transition={{ duration: 2, repeat: Infinity }}
                         />
                         <motion.div
-                          className="absolute inset-0 rounded-full border-4 border-yellow-400"
+                          className="absolute inset-0 rounded-full border-3 border-yellow-400"
                           animate={{ 
                             scale: [1, 1.3, 1], 
                             opacity: [1, 0, 1] 
@@ -519,22 +519,13 @@ const CandyRoadMap = ({ career, onBack }: CandyRoadMapProps) => {
                       </>
                     )}
 
-                    {/* Node label with 3D effect */}
+                    {/* Node label - positioned below icon */}
                     <div 
-                      className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-48 text-center bg-white backdrop-blur px-4 py-3 rounded-xl shadow-2xl border-2 border-gray-200"
-                      style={{
-                        boxShadow: '0 10px 30px -10px rgba(0,0,0,0.3)',
-                      }}
+                      className="absolute -bottom-14 left-1/2 -translate-x-1/2 w-32 text-center bg-white/95 backdrop-blur px-2 py-1.5 rounded-lg shadow-lg border border-gray-200"
                     >
-                      <p className="font-bold text-sm text-foreground line-clamp-2 mb-1">
+                      <p className="font-bold text-xs text-foreground line-clamp-2 leading-tight">
                         {node.title}
                       </p>
-                      <Badge 
-                        variant="secondary" 
-                        className="text-xs shadow-sm"
-                      >
-                        {node.type === 'skill' ? '📖 Skill' : '🎯 Project'}
-                      </Badge>
                     </div>
                   </motion.button>
                 </motion.div>
