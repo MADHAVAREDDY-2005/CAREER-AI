@@ -360,6 +360,24 @@ const skillToCareerMap: Record<string, number[]> = {
 // ============================================
 
 /**
+ * Exact string matching helper to avoid false positives
+ * (e.g., "javascript" should not match "java")
+ */
+const isExactMatch = (str1: string, str2: string): boolean => {
+  const s1 = str1.toLowerCase().trim();
+  const s2 = str2.toLowerCase().trim();
+  
+  // Direct exact match
+  if (s1 === s2) return true;
+  
+  // Word boundary matching (e.g., "react" matches "React.js")
+  const words1 = s1.split(/[\s/.-]+/);
+  const words2 = s2.split(/[\s/.-]+/);
+  
+  return words1.some(w1 => words2.some(w2 => w1 === w2 && w1.length > 2));
+};
+
+/**
  * Calculate how well a career matches the user's profile
  * @param career - The career to evaluate
  * @param assessment - User's assessment data
@@ -367,51 +385,79 @@ const skillToCareerMap: Record<string, number[]> = {
  */
 const calculateMatchPercentage = (career: Omit<Career, 'matchPercentage'>, assessment: AssessmentData): number => {
   let score = 0;
-  const maxScore = 100;
   
-  // SKILL MATCHING (70% weight) - Most important factor
-  const skillWeight = 0.7;
-  if (assessment.currentSkills.length > 0) {
-    const matchingSkills = assessment.currentSkills.filter(userSkill => {
-      // Check if any required skill matches or is similar to user's skill
-      return career.requiredSkills.some(reqSkill => 
-        reqSkill.toLowerCase().includes(userSkill.toLowerCase()) ||
-        userSkill.toLowerCase().includes(reqSkill.toLowerCase())
-      );
-    });
-    
-    // Calculate skill match score
-    const skillMatchRatio = matchingSkills.length / career.requiredSkills.length;
-    score += skillWeight * maxScore * skillMatchRatio;
-  } else {
-    // If no skills, give base score based on experience level
-    const experienceScores = { beginner: 30, intermediate: 50, advanced: 60 };
-    score += skillWeight * experienceScores[assessment.experienceLevel];
-  }
-  
-  // INTEREST MATCHING (30% weight)
-  const interestWeight = 0.3;
+  // INTEREST MATCHING (Primary - 60% weight)
+  // This is now the primary factor for recommendations
+  let interestScore = 0;
   if (assessment.interests.length > 0) {
     const careerKeywords = [
       career.title.toLowerCase(),
+      ...career.title.toLowerCase().split(' '),
       career.description.toLowerCase(),
-      ...career.requiredSkills.map(s => s.toLowerCase())
     ];
     
-    const matchingInterests = assessment.interests.filter(interest => {
+    let interestMatches = 0;
+    assessment.interests.forEach(interest => {
       const interestLower = interest.toLowerCase();
-      return careerKeywords.some(keyword => 
-        keyword.includes(interestLower) || interestLower.includes(keyword)
-      );
+      
+      // Check for exact/strong matches
+      if (careerKeywords.some(keyword => 
+        isExactMatch(keyword, interestLower) || 
+        keyword.includes(interestLower) && interestLower.length > 3
+      )) {
+        interestMatches += 1;
+      }
+      
+      // Special strong interest matching
+      const interestMap: Record<string, string[]> = {
+        'machine learning': ['ml engineer', 'data scientist'],
+        'data science': ['data scientist', 'data analyst'],
+        'web development': ['frontend', 'backend', 'full stack'],
+        'frontend development': ['frontend'],
+        'backend development': ['backend'],
+        'ai': ['ml engineer', 'data scientist'],
+        'devops': ['devops'],
+        'cloud computing': ['devops'],
+      };
+      
+      Object.entries(interestMap).forEach(([key, values]) => {
+        if (interestLower.includes(key) && values.some(v => career.title.toLowerCase().includes(v))) {
+          interestMatches += 2; // Strong match bonus
+        }
+      });
     });
     
-    if (matchingInterests.length > 0) {
-      score += interestWeight * maxScore * (matchingInterests.length / assessment.interests.length);
+    if (interestMatches > 0) {
+      interestScore = Math.min(100, (interestMatches / assessment.interests.length) * 120);
     }
   }
   
-  // Ensure score is between 10 and 100
-  return Math.min(100, Math.max(10, Math.round(score)));
+  // SKILL MATCHING (Secondary - 40% weight)
+  let skillScore = 0;
+  if (assessment.currentSkills.length > 0) {
+    const matchingSkills = assessment.currentSkills.filter(userSkill => {
+      return career.requiredSkills.some(reqSkill => 
+        isExactMatch(userSkill, reqSkill)
+      );
+    });
+    
+    if (matchingSkills.length > 0) {
+      skillScore = (matchingSkills.length / career.requiredSkills.length) * 100;
+    }
+  }
+  
+  // Calculate weighted final score
+  if (assessment.interests.length > 0) {
+    // When interests are provided, they dominate the matching
+    score = (interestScore * 0.6) + (skillScore * 0.4);
+  } else {
+    // When no interests, skills become primary
+    score = skillScore || 30; // Base score if no skills
+  }
+  
+  // Ensure minimum score only if there's at least some match
+  const hasAnyMatch = interestScore > 0 || skillScore > 0;
+  return hasAnyMatch ? Math.min(100, Math.max(15, Math.round(score))) : 0;
 };
 
 // ============================================
@@ -434,10 +480,10 @@ export const generateCareerRecommendations = async (assessment: AssessmentData):
     matchPercentage: calculateMatchPercentage(career, assessment)
   }));
   
-  // Sort by match percentage (highest first)
+  // Sort by match percentage (highest first) and filter out low matches
   const sortedCareers = careersWithMatches
-    .sort((a, b) => b.matchPercentage - a.matchPercentage)
-    .filter(career => career.matchPercentage >= 15); // Only show careers with >15% match
+    .filter(career => career.matchPercentage >= 30) // Only show careers with strong match (>=30%)
+    .sort((a, b) => b.matchPercentage - a.matchPercentage);
   
   // Return top 6 matches (or all if less than 6)
   return sortedCareers.slice(0, 6);

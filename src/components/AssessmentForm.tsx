@@ -26,8 +26,8 @@ const AssessmentForm = ({ onComplete, onBack }: AssessmentFormProps) => {
 
   const commonInterests = [
     'Web Development', 'Mobile Apps', 'Machine Learning', 'Data Science',
-    'Cloud Computing', 'Cybersecurity', 'Game Development', 'AI/ML',
-    'Blockchain', 'DevOps', 'UI/UX Design', 'Backend Development'
+    'Cloud Computing', 'Cybersecurity', 'Game Development',
+    'Blockchain', 'DevOps', 'UI/UX Design', 'Backend Development', 'Frontend Development'
   ];
 
   const commonSkills = [

@@ -8,6 +8,7 @@ export interface RoadmapNode {
   type: 'skill' | 'project';     // Type of node
   title: string;                 // Node title (e.g., "HTML Basics")
   description: string;           // Detailed description
+  theory?: string;               // Theoretical explanation for theory learners
   youtubeId?: string;            // YouTube video ID for embedding (e.g., "mU6anWqZJcc")
   resources: Resource[];         // Additional learning resources
   estimatedHours?: number;       // Estimated time to complete

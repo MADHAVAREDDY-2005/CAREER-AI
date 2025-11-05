@@ -44,6 +44,7 @@ const convertToNodes = (career: Career): RoadmapNode[] => {
       type: 'skill',
       title: skill,
       description: `Master ${skill} fundamentals to build your foundation.`,
+      theory: `${skill} is a foundational skill in ${career.title}. Understanding the core concepts and syntax is essential. Take time to practice with small exercises and understand the 'why' behind each concept, not just the 'how'. Build a strong foundation here as it will support all your future learning.`,
       youtubeId: extractYouTubeId(career.roadmap.beginner.courses[0] || ''),
       resources: career.roadmap.beginner.courses.map(course => ({
         title: course.split('(')[0].trim(),
@@ -62,6 +63,8 @@ const convertToNodes = (career: Career): RoadmapNode[] => {
       type: 'project',
       title: project,
       description: `Build this project to practice your beginner skills: ${career.roadmap.beginner.skills.join(', ')}.`,
+      theory: `This project will help you apply the fundamental concepts you've learned. Focus on building a working solution and don't worry about perfection. The key is to practice implementing what you've studied.`,
+      youtubeId: 'dQw4w9WgXcQ', // Placeholder - will be updated with actual project tutorials
       resources: [{
         title: 'Project Ideas & Tutorials',
         url: 'https://www.freecodecamp.org/news/tag/projects/',
@@ -80,6 +83,7 @@ const convertToNodes = (career: Career): RoadmapNode[] => {
       type: 'skill',
       title: skill,
       description: `Level up with ${skill} to build more complex applications.`,
+      theory: `${skill} builds upon your foundational knowledge and introduces more advanced concepts. At this level, focus on understanding design patterns, best practices, and how to write maintainable code. Study real-world examples and understand how professionals use this skill in production environments.`,
       youtubeId: extractYouTubeId(career.roadmap.intermediate.courses[0] || ''),
       resources: career.roadmap.intermediate.courses.map(course => ({
         title: course.split('(')[0].trim(),
@@ -98,6 +102,8 @@ const convertToNodes = (career: Career): RoadmapNode[] => {
       type: 'project',
       title: project,
       description: `Apply your intermediate skills: ${career.roadmap.intermediate.skills.join(', ')}.`,
+      theory: `At this intermediate level, focus on building more complex applications that solve real problems. Pay attention to code organization, best practices, and user experience. This is where you start thinking like a professional developer.`,
+      youtubeId: 'dQw4w9WgXcQ', // Placeholder
       resources: [{
         title: 'Intermediate Projects',
         url: 'https://github.com/topics/project-ideas',
@@ -116,6 +122,7 @@ const convertToNodes = (career: Career): RoadmapNode[] => {
       type: 'skill',
       title: skill,
       description: `Master advanced ${skill} for professional-grade applications.`,
+      theory: `${skill} represents advanced expertise in ${career.title}. At this level, you should understand not just how to use the technology, but when and why to use it. Study system design, performance optimization, security considerations, and scalability. Master the trade-offs and decision-making processes that professionals use.`,
       youtubeId: extractYouTubeId(career.roadmap.advanced.courses[0] || ''),
       resources: career.roadmap.advanced.courses.map(course => ({
         title: course.split('(')[0].trim(),
@@ -134,6 +141,8 @@ const convertToNodes = (career: Career): RoadmapNode[] => {
       type: 'project',
       title: project,
       description: `Showcase your expertise with this advanced project using ${career.roadmap.advanced.skills.join(', ')}.`,
+      theory: `Advanced projects are your opportunity to demonstrate mastery and build portfolio-worthy applications. Focus on scalability, performance, testing, and production-ready code. These projects should showcase your ability to architect and deliver professional-grade solutions.`,
+      youtubeId: 'dQw4w9WgXcQ', // Placeholder
       resources: [{
         title: 'Advanced Project Ideas',
         url: 'https://github.com/practical-tutorials/project-based-learning',
@@ -523,9 +532,16 @@ const CandyRoadMap = ({ career, onBack }: CandyRoadMapProps) => {
                     <div 
                       className="absolute -bottom-14 left-1/2 -translate-x-1/2 w-32 text-center bg-white/95 backdrop-blur px-2 py-1.5 rounded-lg shadow-lg border border-gray-200"
                     >
-                      <p className="font-bold text-xs text-foreground line-clamp-2 leading-tight">
+                      <p className={`font-bold text-xs line-clamp-2 leading-tight ${
+                        node.type === 'project' ? 'text-red-600' : 'text-foreground'
+                      }`}>
                         {node.title}
                       </p>
+                      <Badge variant="outline" className={`text-[8px] mt-0.5 ${
+                        node.type === 'project' ? 'border-red-500 text-red-600' : 'border-blue-500 text-blue-600'
+                      }`}>
+                        {node.type === 'project' ? 'PROJECT' : 'SKILL'}
+                      </Badge>
                     </div>
                   </motion.button>
                 </motion.div>
@@ -540,20 +556,46 @@ const CandyRoadMap = ({ career, onBack }: CandyRoadMapProps) => {
             {selectedNode && (
               <>
                 <DialogHeader>
-                  <DialogTitle className="text-2xl flex items-center gap-2">
+                  <DialogTitle className={`text-2xl flex items-center gap-2 ${
+                    selectedNode.type === 'project' ? 'text-red-600' : ''
+                  }`}>
                     {selectedNode.type === 'skill' ? '📚' : '💻'}
                     {selectedNode.title}
+                    <Badge className={selectedNode.type === 'project' 
+                      ? 'bg-red-500 text-white ml-2' 
+                      : 'bg-blue-500 text-white ml-2'
+                    }>
+                      {selectedNode.type === 'project' ? 'PROJECT' : 'SKILL'}
+                    </Badge>
                   </DialogTitle>
                 </DialogHeader>
 
                 <div className="space-y-6">
-                  {/* Theory Section */}
-                  <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
-                    <h3 className="font-bold text-blue-900 mb-2 flex items-center gap-2">
-                      📖 What You'll Learn
+                  {/* Description Section */}
+                  <div className={`border-l-4 p-4 rounded-r-lg ${
+                    selectedNode.type === 'project' 
+                      ? 'bg-red-50 border-red-500' 
+                      : 'bg-blue-50 border-blue-500'
+                  }`}>
+                    <h3 className={`font-bold mb-2 flex items-center gap-2 ${
+                      selectedNode.type === 'project' ? 'text-red-900' : 'text-blue-900'
+                    }`}>
+                      📖 What You'll {selectedNode.type === 'project' ? 'Build' : 'Learn'}
                     </h3>
-                    <p className="text-blue-800 leading-relaxed">{selectedNode.description}</p>
+                    <p className={selectedNode.type === 'project' ? 'text-red-800' : 'text-blue-800'}>
+                      {selectedNode.description}
+                    </p>
                   </div>
+
+                  {/* Theory Section for Theory Learners */}
+                  {selectedNode.theory && (
+                    <div className="bg-purple-50 border-l-4 border-purple-500 p-4 rounded-r-lg">
+                      <h3 className="font-bold text-purple-900 mb-2 flex items-center gap-2">
+                        🧠 Theory & Understanding
+                      </h3>
+                      <p className="text-purple-800 leading-relaxed">{selectedNode.theory}</p>
+                    </div>
+                  )}
 
                   {/* Estimated time */}
                   {selectedNode.estimatedHours && (
