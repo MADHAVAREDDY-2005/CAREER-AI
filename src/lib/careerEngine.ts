@@ -303,6 +303,181 @@ const careerDatabase: Omit<Career, 'matchPercentage'>[] = [
         ]
       }
     }
+  },
+
+  {
+    id: 9,
+    title: "Mobile App Developer",
+    description: "Creates native and cross-platform mobile applications for iOS and Android devices.",
+    requiredSkills: ["React Native", "Flutter", "JavaScript", "Mobile UI/UX"],
+    averageSalary: "₹5,00,000 - ₹12,00,000 per year",
+    jobGrowth: "24% (High demand for mobile-first applications)",
+    roadmap: {
+      beginner: {
+        skills: ["JavaScript Basics", "React Basics", "Mobile Design Principles"],
+        projects: ["Simple Calculator App", "Weather App", "To-Do List App"],
+        courses: [
+          "React Native Tutorial (YouTube - https://www.youtube.com/watch?v=0-S5a0eXPoc)",
+          "Mobile App Development Basics (Coursera - https://www.coursera.org/learn/react-native)"
+        ]
+      },
+      intermediate: {
+        skills: ["React Native", "API Integration", "State Management", "Navigation"],
+        projects: ["E-commerce App", "Social Media Clone", "News App with API"],
+        courses: [
+          "React Native Full Course (YouTube - https://www.youtube.com/watch?v=ANdSdIlgsEw)",
+          "Flutter for Beginners (Udemy)"
+        ]
+      },
+      advanced: {
+        skills: ["Flutter", "Native Modules", "App Deployment", "Performance Optimization"],
+        projects: ["Food Delivery App", "Real-time Chat App", "Fitness Tracker"],
+        courses: [
+          "Advanced React Native (Udemy)",
+          "Flutter Complete Guide (YouTube - https://www.youtube.com/watch?v=x0uinJvhNxI)"
+        ]
+      }
+    }
+  },
+
+  {
+    id: 10,
+    title: "Cybersecurity Analyst",
+    description: "Protects systems, networks, and data from cyber threats through security analysis and defense strategies.",
+    requiredSkills: ["Network Security", "Ethical Hacking", "Linux", "Security Tools"],
+    averageSalary: "₹6,00,000 - ₹14,00,000 per year",
+    jobGrowth: "28% (Critical demand across all industries)",
+    roadmap: {
+      beginner: {
+        skills: ["Networking Fundamentals", "Linux Basics", "Security Concepts"],
+        projects: ["Network Scanner", "Password Strength Checker", "Security Audit Report"],
+        courses: [
+          "Cybersecurity Basics (Coursera - https://www.coursera.org/learn/intro-cyber-security)",
+          "Networking Fundamentals (YouTube - https://www.youtube.com/watch?v=qiQR5rTSshw)"
+        ]
+      },
+      intermediate: {
+        skills: ["Ethical Hacking", "Penetration Testing", "Wireshark", "Metasploit"],
+        projects: ["Vulnerability Assessment", "Security Monitoring System", "Firewall Configuration"],
+        courses: [
+          "Ethical Hacking Course (Udemy)",
+          "Kali Linux Tutorial (YouTube - https://www.youtube.com/watch?v=lZAoFs75_cs)"
+        ]
+      },
+      advanced: {
+        skills: ["Advanced Penetration Testing", "Incident Response", "Security Frameworks", "Forensics"],
+        projects: ["Penetration Testing Lab", "Incident Response Plan", "Security Automation Tool"],
+        courses: [
+          "Advanced Ethical Hacking (Udemy)",
+          "CompTIA Security+ (https://www.comptia.org/certifications/security)"
+        ]
+      }
+    }
+  },
+
+  {
+    id: 11,
+    title: "UI/UX Designer",
+    description: "Designs intuitive and beautiful user interfaces and experiences for web and mobile applications.",
+    requiredSkills: ["Figma", "Adobe XD", "User Research", "Prototyping"],
+    averageSalary: "₹4,50,000 - ₹10,00,000 per year",
+    jobGrowth: "20% (Growing demand for user-centered design)",
+    roadmap: {
+      beginner: {
+        skills: ["Design Principles", "Color Theory", "Typography", "Figma Basics"],
+        projects: ["Portfolio Website Design", "Mobile App Mockup", "Landing Page Design"],
+        courses: [
+          "UI/UX Design Fundamentals (Coursera - https://www.coursera.org/learn/ui-ux-design)",
+          "Figma Tutorial (YouTube - https://www.youtube.com/watch?v=FTFaQWZBqQ8)"
+        ]
+      },
+      intermediate: {
+        skills: ["User Research", "Wireframing", "Prototyping", "Usability Testing"],
+        projects: ["E-commerce Website Design", "Dashboard Design", "Mobile Banking App"],
+        courses: [
+          "Google UX Design Certificate (Coursera - https://www.coursera.org/professional-certificates/google-ux-design)",
+          "Advanced Figma (YouTube - https://www.youtube.com/results?search_query=advanced+figma)"
+        ]
+      },
+      advanced: {
+        skills: ["Design Systems", "Advanced Prototyping", "Design Thinking", "A/B Testing"],
+        projects: ["Complete Design System", "Interactive Prototype", "User Research Study"],
+        courses: [
+          "Design Systems in Figma (Udemy)",
+          "UX Research Methods (Coursera - https://www.coursera.org/learn/user-research)"
+        ]
+      }
+    }
+  },
+
+  {
+    id: 12,
+    title: "Game Developer",
+    description: "Creates engaging games for various platforms using game engines and programming.",
+    requiredSkills: ["Unity", "C#", "Game Design", "3D Modeling"],
+    averageSalary: "₹4,00,000 - ₹10,00,000 per year",
+    jobGrowth: "18% (Growing gaming industry in India)",
+    roadmap: {
+      beginner: {
+        skills: ["C# Basics", "Unity Fundamentals", "Game Design Basics"],
+        projects: ["2D Platformer Game", "Simple Puzzle Game", "Endless Runner"],
+        courses: [
+          "Unity for Beginners (YouTube - Brackeys - https://www.youtube.com/user/Brackeys)",
+          "C# Programming (Coursera - https://www.coursera.org/learn/c-sharp-programming)"
+        ]
+      },
+      intermediate: {
+        skills: ["Unity 3D", "Physics & Collisions", "Game AI", "Animation"],
+        projects: ["3D Adventure Game", "Multiplayer Game", "Mobile Game"],
+        courses: [
+          "Unity Complete Course (Udemy)",
+          "Game Development Tutorial (YouTube - https://www.youtube.com/results?search_query=unity+game+development)"
+        ]
+      },
+      advanced: {
+        skills: ["Unreal Engine", "Advanced C++", "Shader Programming", "Game Optimization"],
+        projects: ["FPS Game", "Open World Game", "VR Game Experience"],
+        courses: [
+          "Unreal Engine C++ (Udemy)",
+          "Advanced Game Programming (YouTube - https://www.youtube.com/results?search_query=advanced+game+programming)"
+        ]
+      }
+    }
+  },
+
+  {
+    id: 13,
+    title: "Blockchain Developer",
+    description: "Builds decentralized applications and smart contracts on blockchain platforms.",
+    requiredSkills: ["Solidity", "Ethereum", "Web3.js", "Smart Contracts"],
+    averageSalary: "₹8,00,000 - ₹18,00,000 per year",
+    jobGrowth: "32% (Emerging technology with high demand)",
+    roadmap: {
+      beginner: {
+        skills: ["Blockchain Basics", "Cryptography", "JavaScript", "Web3 Fundamentals"],
+        projects: ["Simple Blockchain in Python", "Crypto Wallet UI", "NFT Minting Page"],
+        courses: [
+          "Blockchain Basics (Coursera - https://www.coursera.org/learn/blockchain-basics)",
+          "Cryptocurrency Fundamentals (YouTube - https://www.youtube.com/watch?v=qOVAbKKSH10)"
+        ]
+      },
+      intermediate: {
+        skills: ["Solidity", "Smart Contracts", "Ethereum", "Truffle"],
+        projects: ["ERC-20 Token", "Simple DApp", "NFT Marketplace"],
+        courses: [
+          "Solidity Full Course (YouTube - https://www.youtube.com/watch?v=M576WGiDBdQ)",
+          "Ethereum Development (Udemy)"
+        ]
+      },
+      advanced: {
+        skills: ["DeFi Protocols", "Layer 2 Solutions", "Web3.js", "Security Auditing"],
+        projects: ["DEX (Decentralized Exchange)", "DAO Platform", "DeFi Lending Protocol"],
+        courses: [
+          "Advanced Blockchain Development (Udemy)",
+          "Smart Contract Security (YouTube - https://www.youtube.com/results?search_query=smart+contract+security)"
+        ]
+      }
+    }
   }
 ];
 
@@ -315,8 +490,10 @@ const skillToCareerMap: Record<string, number[]> = {
   // Frontend/Web Development skills
   'HTML': [1, 3],           // Frontend, Full Stack
   'CSS': [1, 3],            // Frontend, Full Stack
-  'JavaScript': [1, 2, 3, 5], // Frontend, Backend, Full Stack, Python (for web)
-  'React': [1, 3],          // Frontend, Full Stack
+  'HTML/CSS': [1, 3],       // Frontend, Full Stack (combined)
+  'JavaScript': [1, 2, 3, 9], // Frontend, Backend, Full Stack, Mobile
+  'React': [1, 3, 9],       // Frontend, Full Stack, Mobile
+  'React Native': [9],      // Mobile App Developer
   'Next.js': [1, 3],        // Frontend, Full Stack
   'TypeScript': [1, 2, 3],  // Frontend, Backend, Full Stack
   'Bootstrap': [1, 3],      // Frontend, Full Stack
@@ -324,7 +501,7 @@ const skillToCareerMap: Record<string, number[]> = {
   // Backend Development skills
   'Node.js': [2, 3],        // Backend, Full Stack
   'Express': [2, 3],        // Backend, Full Stack
-  'Java': [4],              // Java Developer
+  'Java': [4],              // Java Developer (only Java, not JavaScript)
   'Spring Boot': [4],       // Java Developer
   'Python': [5, 6, 7],      // Python Dev, Data Analyst, ML Engineer
   'Flask': [5],             // Python Developer
@@ -348,10 +525,39 @@ const skillToCareerMap: Record<string, number[]> = {
   'Docker': [2, 4, 8],      // Backend, Java, DevOps
   'Kubernetes': [8],        // DevOps
   'AWS': [8],               // DevOps
-  'Linux': [8],             // DevOps
-  'Git': [1, 2, 3, 4, 5],   // All development roles
+  'Linux': [8, 10],         // DevOps, Cybersecurity
+  'Git': [1, 2, 3, 4, 5, 9, 12, 13], // All development roles
   'CI/CD': [8],             // DevOps
   'Jenkins': [8],           // DevOps
+  
+  // Mobile Development skills
+  'Flutter': [9],           // Mobile App Developer
+  'Swift': [9],             // Mobile App Developer
+  'Kotlin': [9],            // Mobile App Developer
+  
+  // Cybersecurity skills
+  'Network Security': [10], // Cybersecurity
+  'Ethical Hacking': [10],  // Cybersecurity
+  'Penetration Testing': [10], // Cybersecurity
+  'Kali Linux': [10],       // Cybersecurity
+  
+  // UI/UX Design skills
+  'Figma': [11],            // UI/UX Designer
+  'Adobe XD': [11],         // UI/UX Designer
+  'Sketch': [11],           // UI/UX Designer
+  'Prototyping': [11],      // UI/UX Designer
+  
+  // Game Development skills
+  'Unity': [12],            // Game Developer
+  'C#': [12],               // Game Developer
+  'Unreal Engine': [12],    // Game Developer
+  'C++': [12],              // Game Developer
+  
+  // Blockchain skills
+  'Solidity': [13],         // Blockchain Developer
+  'Ethereum': [13],         // Blockchain Developer
+  'Web3.js': [13],          // Blockchain Developer
+  'Smart Contracts': [13],  // Blockchain Developer
 };
 
 // ============================================
@@ -386,7 +592,7 @@ const isExactMatch = (str1: string, str2: string): boolean => {
 const calculateMatchPercentage = (career: Omit<Career, 'matchPercentage'>, assessment: AssessmentData): number => {
   let score = 0;
   
-  // INTEREST MATCHING (Primary - 60% weight)
+  // INTEREST MATCHING (Primary - 70% weight)
   // This is now the primary factor for recommendations
   let interestScore = 0;
   if (assessment.interests.length > 0) {
@@ -400,64 +606,106 @@ const calculateMatchPercentage = (career: Omit<Career, 'matchPercentage'>, asses
     assessment.interests.forEach(interest => {
       const interestLower = interest.toLowerCase();
       
-      // Check for exact/strong matches
+      // Exact strong interest matching with career IDs
+      const interestToCareerMap: Record<string, number[]> = {
+        'machine learning': [7],           // ML Engineer only
+        'data science': [6, 7],            // Data Analyst, ML Engineer
+        'web development': [1, 2, 3],      // Frontend, Backend, Full Stack
+        'frontend development': [1],       // Frontend only
+        'backend development': [2],        // Backend only
+        'ai': [7],                         // ML Engineer only
+        'devops': [8],                     // DevOps only
+        'cloud computing': [8],            // DevOps only
+        'mobile apps': [9],                // Mobile App Developer only
+        'mobile development': [9],         // Mobile App Developer only
+        'cybersecurity': [10],             // Cybersecurity only
+        'ui/ux design': [11],              // UI/UX Designer only
+        'ui/ux': [11],                     // UI/UX Designer only
+        'design': [11],                    // UI/UX Designer only
+        'game development': [12],          // Game Developer only
+        'blockchain': [13],                // Blockchain Developer only
+        'crypto': [13],                    // Blockchain Developer only
+      };
+      
+      // Check for exact interest match
+      Object.entries(interestToCareerMap).forEach(([key, careerIds]) => {
+        if (interestLower.includes(key) && careerIds.includes(career.id)) {
+          interestMatches += 3; // Very strong match for exact interest
+        }
+      });
+      
+      // Fallback: check for partial keyword matches
       if (careerKeywords.some(keyword => 
         isExactMatch(keyword, interestLower) || 
-        keyword.includes(interestLower) && interestLower.length > 3
+        (keyword.includes(interestLower) && interestLower.length > 3)
       )) {
         interestMatches += 1;
       }
+    });
+    
+    if (interestMatches > 0) {
+      interestScore = Math.min(100, (interestMatches / assessment.interests.length) * 100);
+    }
+  }
+  
+  // SKILL MATCHING (Secondary - 30% weight)
+  let skillScore = 0;
+  if (assessment.currentSkills.length > 0) {
+    // Check if any user skills map to this career
+    const skillBasedCareerIds = new Set<number>();
+    assessment.currentSkills.forEach(userSkill => {
+      const userSkillLower = userSkill.toLowerCase().trim();
       
-      // Special strong interest matching
-      const interestMap: Record<string, string[]> = {
-        'machine learning': ['ml engineer', 'data scientist'],
-        'data science': ['data scientist', 'data analyst'],
-        'web development': ['frontend', 'backend', 'full stack'],
-        'frontend development': ['frontend'],
-        'backend development': ['backend'],
-        'ai': ['ml engineer', 'data scientist'],
-        'devops': ['devops'],
-        'cloud computing': ['devops'],
-      };
+      // Check skillToCareerMap for matching careers
+      Object.entries(skillToCareerMap).forEach(([skill, careerIds]) => {
+        if (isExactMatch(userSkillLower, skill.toLowerCase())) {
+          careerIds.forEach(id => skillBasedCareerIds.add(id));
+        }
+      });
       
-      Object.entries(interestMap).forEach(([key, values]) => {
-        if (interestLower.includes(key) && values.some(v => career.title.toLowerCase().includes(v))) {
-          interestMatches += 2; // Strong match bonus
+      // Also check against required skills
+      career.requiredSkills.forEach(reqSkill => {
+        if (isExactMatch(userSkillLower, reqSkill.toLowerCase())) {
+          skillBasedCareerIds.add(career.id);
         }
       });
     });
     
-    if (interestMatches > 0) {
-      interestScore = Math.min(100, (interestMatches / assessment.interests.length) * 120);
-    }
-  }
-  
-  // SKILL MATCHING (Secondary - 40% weight)
-  let skillScore = 0;
-  if (assessment.currentSkills.length > 0) {
-    const matchingSkills = assessment.currentSkills.filter(userSkill => {
-      return career.requiredSkills.some(reqSkill => 
-        isExactMatch(userSkill, reqSkill)
-      );
-    });
-    
-    if (matchingSkills.length > 0) {
-      skillScore = (matchingSkills.length / career.requiredSkills.length) * 100;
+    // If this career matches user's skills
+    if (skillBasedCareerIds.has(career.id)) {
+      const matchingSkills = assessment.currentSkills.filter(userSkill => {
+        return career.requiredSkills.some(reqSkill => 
+          isExactMatch(userSkill, reqSkill)
+        ) || Object.entries(skillToCareerMap).some(([skill, careerIds]) => 
+          isExactMatch(userSkill, skill) && careerIds.includes(career.id)
+        );
+      });
+      
+      if (matchingSkills.length > 0) {
+        skillScore = Math.min(100, (matchingSkills.length / Math.max(career.requiredSkills.length, 3)) * 100);
+      } else {
+        skillScore = 50; // Some skill relevance even without exact match
+      }
     }
   }
   
   // Calculate weighted final score
-  if (assessment.interests.length > 0) {
-    // When interests are provided, they dominate the matching
-    score = (interestScore * 0.6) + (skillScore * 0.4);
+  if (assessment.interests.length > 0 && assessment.currentSkills.length > 0) {
+    // When both interests and skills are provided
+    score = (interestScore * 0.7) + (skillScore * 0.3);
+  } else if (assessment.interests.length > 0) {
+    // When only interests are provided, they dominate
+    score = interestScore;
+  } else if (assessment.currentSkills.length > 0) {
+    // When only skills are provided, they become primary
+    score = skillScore;
   } else {
-    // When no interests, skills become primary
-    score = skillScore || 30; // Base score if no skills
+    score = 0;
   }
   
   // Ensure minimum score only if there's at least some match
   const hasAnyMatch = interestScore > 0 || skillScore > 0;
-  return hasAnyMatch ? Math.min(100, Math.max(15, Math.round(score))) : 0;
+  return hasAnyMatch ? Math.min(100, Math.max(20, Math.round(score))) : 0;
 };
 
 // ============================================
