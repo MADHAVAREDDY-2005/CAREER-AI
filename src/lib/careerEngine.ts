@@ -487,77 +487,247 @@ const careerDatabase: Omit<Career, 'matchPercentage'>[] = [
 // ============================================
 
 const skillToCareerMap: Record<string, number[]> = {
-  // Frontend/Web Development skills
-  'HTML': [1, 3],           // Frontend, Full Stack
-  'CSS': [1, 3],            // Frontend, Full Stack
-  'HTML/CSS': [1, 3],       // Frontend, Full Stack (combined)
-  'JavaScript': [1, 2, 3, 9], // Frontend, Backend, Full Stack, Mobile
-  'React': [1, 3, 9],       // Frontend, Full Stack, Mobile
-  'React Native': [9],      // Mobile App Developer
-  'Next.js': [1, 3],        // Frontend, Full Stack
-  'TypeScript': [1, 2, 3],  // Frontend, Backend, Full Stack
-  'Bootstrap': [1, 3],      // Frontend, Full Stack
+  // Frontend Development skills (case-insensitive variations)
+  'HTML': [1, 3],              // Frontend, Full Stack
+  'html': [1, 3],
+  'CSS': [1, 3],               // Frontend, Full Stack
+  'css': [1, 3],
+  'HTML/CSS': [1, 3],          // Frontend, Full Stack
+  'html/css': [1, 3],
+  'JavaScript': [1, 2, 3],     // Frontend, Backend, Full Stack
+  'javascript': [1, 2, 3],
+  'JS': [1, 2, 3],
+  'js': [1, 2, 3],
+  'React': [1, 3],             // Frontend, Full Stack
+  'react': [1, 3],
+  'Vue': [1, 3],               // Frontend, Full Stack
+  'vue': [1, 3],
+  'Angular': [1, 3],           // Frontend, Full Stack
+  'angular': [1, 3],
+  'Tailwind': [1, 3],          // Frontend, Full Stack
+  'tailwind': [1, 3],
+  'Bootstrap': [1, 3],         // Frontend, Full Stack
+  'bootstrap': [1, 3],
+  'Next.js': [1, 3],           // Frontend, Full Stack
+  'nextjs': [1, 3],
+  'next': [1, 3],
+  'TypeScript': [1, 2, 3],     // Frontend, Backend, Full Stack
+  'typescript': [1, 2, 3],
+  'Responsive Design': [1, 3], // Frontend, Full Stack
+  'responsive design': [1, 3],
+  'Sass': [1, 3],              // Frontend, Full Stack
+  'sass': [1, 3],
+  'SCSS': [1, 3],
+  'scss': [1, 3],
+  'Webpack': [1, 3],
+  'webpack': [1, 3],
+  'Vite': [1, 3],
+  'vite': [1, 3],
   
   // Backend Development skills
-  'Node.js': [2, 3],        // Backend, Full Stack
-  'Express': [2, 3],        // Backend, Full Stack
-  'Java': [4],              // Java Developer (only Java, not JavaScript)
-  'Spring Boot': [4],       // Java Developer
-  'Python': [5, 6, 7],      // Python Dev, Data Analyst, ML Engineer
-  'Flask': [5],             // Python Developer
-  'Django': [5],            // Python Developer
+  'Node.js': [2, 3],           // Backend, Full Stack
+  'nodejs': [2, 3],
+  'node': [2, 3],
+  'Express': [2, 3],           // Backend, Full Stack
+  'express': [2, 3],
+  'MongoDB': [2, 3],           // Backend, Full Stack
+  'mongodb': [2, 3],
+  'SQL': [2, 3, 4, 5, 6],      // Backend, Full Stack, Java, Python, Data
+  'sql': [2, 3, 4, 5, 6],
+  'PostgreSQL': [2, 3],        // Backend, Full Stack
+  'postgresql': [2, 3],
+  'MySQL': [2, 3, 4],          // Backend, Full Stack, Java
+  'mysql': [2, 3, 4],
+  'Redis': [2, 3, 8],          // Backend, Full Stack, DevOps
+  'redis': [2, 3, 8],
+  'REST API': [2, 3],          // Backend, Full Stack
+  'rest api': [2, 3],
+  'API': [2, 3],
+  'api': [2, 3],
+  'GraphQL': [2, 3],           // Backend, Full Stack
+  'graphql': [2, 3],
   
-  // Database skills
-  'SQL': [2, 3, 4, 5, 6],   // Backend, Full Stack, Java, Python, Data Analyst
-  'MongoDB': [2, 3],        // Backend, Full Stack
-  'PostgreSQL': [2, 3, 5],  // Backend, Full Stack, Python
+  // Java Development skills
+  'Java': [4],                 // Java Developer only (NOT JavaScript)
+  'java': [4],
+  'Spring Boot': [4],          // Java Developer only
+  'spring boot': [4],
+  'Spring': [4],
+  'spring': [4],
+  'Hibernate': [4],
+  'hibernate': [4],
+  'JPA': [4],
+  'jpa': [4],
+  'Maven': [4],
+  'maven': [4],
+  'Gradle': [4],
+  'gradle': [4],
   
-  // Data & ML skills
-  'Pandas': [6, 7],         // Data Analyst, ML Engineer
-  'NumPy': [7],             // ML Engineer
-  'Scikit-learn': [7],      // ML Engineer
-  'TensorFlow': [7],        // ML Engineer
-  'Excel': [6],             // Data Analyst
-  'Tableau': [6],           // Data Analyst
-  'Power BI': [6],          // Data Analyst
+  // Python Development skills
+  'Python': [5, 6, 7],         // Python, Data Analyst, ML Engineer
+  'python': [5, 6, 7],
+  'Django': [5],               // Python Developer only
+  'django': [5],
+  'Flask': [5],                // Python Developer only
+  'flask': [5],
+  'FastAPI': [5],              // Python Developer only
+  'fastapi': [5],
   
-  // DevOps & Cloud skills
-  'Docker': [2, 4, 8],      // Backend, Java, DevOps
-  'Kubernetes': [8],        // DevOps
-  'AWS': [8],               // DevOps
-  'Linux': [8, 10],         // DevOps, Cybersecurity
-  'Git': [1, 2, 3, 4, 5, 9, 12, 13], // All development roles
-  'CI/CD': [8],             // DevOps
-  'Jenkins': [8],           // DevOps
+  // Data Science & Analytics skills
+  'Pandas': [6, 7],            // Data Analyst, ML Engineer
+  'pandas': [6, 7],
+  'NumPy': [6, 7],             // Data Analyst, ML Engineer
+  'numpy': [6, 7],
+  'Matplotlib': [6, 7],        // Data Analyst, ML Engineer
+  'matplotlib': [6, 7],
+  'Seaborn': [6, 7],           // Data Analyst, ML Engineer
+  'seaborn': [6, 7],
+  'Tableau': [6],              // Data Analyst only
+  'tableau': [6],
+  'Power BI': [6],             // Data Analyst only
+  'power bi': [6],
+  'Excel': [6],                // Data Analyst only
+  'excel': [6],
+  'R': [6, 7],                 // Data Analyst, ML Engineer
+  'r': [6, 7],
+  'Data Analysis': [6, 7],     // Data Analyst, ML Engineer
+  'data analysis': [6, 7],
+  'Statistics': [6, 7],        // Data Analyst, ML Engineer
+  'statistics': [6, 7],
+  
+  // Machine Learning skills
+  'TensorFlow': [7],           // ML Engineer only
+  'tensorflow': [7],
+  'PyTorch': [7],              // ML Engineer only
+  'pytorch': [7],
+  'scikit-learn': [7],         // ML Engineer only
+  'sklearn': [7],
+  'Keras': [7],                // ML Engineer only
+  'keras': [7],
+  'Deep Learning': [7],        // ML Engineer only
+  'deep learning': [7],
+  'Neural Networks': [7],      // ML Engineer only
+  'neural networks': [7],
+  'NLP': [7],                  // ML Engineer only
+  'nlp': [7],
+  'Computer Vision': [7],      // ML Engineer only
+  'computer vision': [7],
+  'Machine Learning': [7],     // ML Engineer only
+  'machine learning': [7],
+  'AI': [7],                   // ML Engineer only
+  'ai': [7],
+  
+  // DevOps skills
+  'Docker': [8],               // DevOps only
+  'docker': [8],
+  'Kubernetes': [8],           // DevOps only
+  'kubernetes': [8],
+  'AWS': [8],                  // DevOps only
+  'aws': [8],
+  'Azure': [8],                // DevOps only
+  'azure': [8],
+  'GCP': [8],                  // DevOps only
+  'gcp': [8],
+  'Jenkins': [8],              // DevOps only
+  'jenkins': [8],
+  'CI/CD': [8],                // DevOps only
+  'ci/cd': [8],
+  'Terraform': [8],            // DevOps only
+  'terraform': [8],
+  'Ansible': [8],              // DevOps only
+  'ansible': [8],
+  'Linux': [8],                // DevOps only
+  'linux': [8],
+  'Git': [1, 2, 3, 4, 5, 8],   // Most dev roles
+  'git': [1, 2, 3, 4, 5, 8],
   
   // Mobile Development skills
-  'Flutter': [9],           // Mobile App Developer
-  'Swift': [9],             // Mobile App Developer
-  'Kotlin': [9],            // Mobile App Developer
+  'React Native': [9],         // Mobile App Developer only
+  'react native': [9],
+  'Flutter': [9],              // Mobile App Developer only
+  'flutter': [9],
+  'Swift': [9],                // Mobile App Developer only
+  'swift': [9],
+  'Kotlin': [9],               // Mobile App Developer only
+  'kotlin': [9],
+  'iOS Development': [9],      // Mobile App Developer only
+  'ios development': [9],
+  'iOS': [9],
+  'ios': [9],
+  'Android Development': [9],  // Mobile App Developer only
+  'android development': [9],
+  'Android': [9],
+  'android': [9],
   
   // Cybersecurity skills
-  'Network Security': [10], // Cybersecurity
-  'Ethical Hacking': [10],  // Cybersecurity
-  'Penetration Testing': [10], // Cybersecurity
-  'Kali Linux': [10],       // Cybersecurity
+  'Penetration Testing': [10], // Cybersecurity only
+  'penetration testing': [10],
+  'Ethical Hacking': [10],     // Cybersecurity only
+  'ethical hacking': [10],
+  'Network Security': [10],    // Cybersecurity only
+  'network security': [10],
+  'SIEM': [10],                // Cybersecurity only
+  'siem': [10],
+  'Firewall': [10],            // Cybersecurity only
+  'firewall': [10],
+  'Cryptography': [10],        // Cybersecurity only
+  'cryptography': [10],
+  'Security': [10],            // Cybersecurity only
+  'security': [10],
+  'Cybersecurity': [10],       // Cybersecurity only
+  'cybersecurity': [10],
   
   // UI/UX Design skills
-  'Figma': [11],            // UI/UX Designer
-  'Adobe XD': [11],         // UI/UX Designer
-  'Sketch': [11],           // UI/UX Designer
-  'Prototyping': [11],      // UI/UX Designer
+  'Figma': [11],               // UI/UX Designer only
+  'figma': [11],
+  'Adobe XD': [11],            // UI/UX Designer only
+  'adobe xd': [11],
+  'Sketch': [11],              // UI/UX Designer only
+  'sketch': [11],
+  'Prototyping': [11],         // UI/UX Designer only
+  'prototyping': [11],
+  'Wireframing': [11],         // UI/UX Designer only
+  'wireframing': [11],
+  'User Research': [11],       // UI/UX Designer only
+  'user research': [11],
+  'UI Design': [11],           // UI/UX Designer only
+  'ui design': [11],
+  'UX Design': [11],           // UI/UX Designer only
+  'ux design': [11],
+  'UI/UX': [11],               // UI/UX Designer only
+  'ui/ux': [11],
   
   // Game Development skills
-  'Unity': [12],            // Game Developer
-  'C#': [12],               // Game Developer
-  'Unreal Engine': [12],    // Game Developer
-  'C++': [12],              // Game Developer
+  'Unity': [12],               // Game Developer
+  'unity': [12],
+  'C#': [12],                  // Game Developer
+  'c#': [12],
+  'Unreal Engine': [12],       // Game Developer
+  'unreal engine': [12],
+  'Unreal': [12],
+  'unreal': [12],
+  'C++': [12],                 // Game Developer
+  'c++': [12],
+  'Game Development': [12],    // Game Developer
+  'game development': [12],
+  '3D Modeling': [12],         // Game Developer
+  '3d modeling': [12],
   
   // Blockchain skills
-  'Solidity': [13],         // Blockchain Developer
-  'Ethereum': [13],         // Blockchain Developer
-  'Web3.js': [13],          // Blockchain Developer
-  'Smart Contracts': [13],  // Blockchain Developer
+  'Solidity': [13],            // Blockchain Developer
+  'solidity': [13],
+  'Ethereum': [13],            // Blockchain Developer
+  'ethereum': [13],
+  'Web3.js': [13],             // Blockchain Developer
+  'web3.js': [13],
+  'Web3': [13],
+  'web3': [13],
+  'Smart Contracts': [13],     // Blockchain Developer
+  'smart contracts': [13],
+  'Blockchain': [13],          // Blockchain Developer
+  'blockchain': [13],
+  'Cryptocurrency': [13],      // Blockchain Developer
+  'cryptocurrency': [13],
 };
 
 // ============================================
@@ -648,43 +818,41 @@ const calculateMatchPercentage = (career: Omit<Career, 'matchPercentage'>, asses
     }
   }
   
-  // SKILL MATCHING (Secondary - 30% weight)
+  // SKILL MATCHING (Secondary - 30% weight, or Primary if no interests provided)
   let skillScore = 0;
   if (assessment.currentSkills.length > 0) {
-    // Check if any user skills map to this career
-    const skillBasedCareerIds = new Set<number>();
+    // Find all careers that match the user's skills
+    const skillMatchCount = new Map<number, number>();
+    
     assessment.currentSkills.forEach(userSkill => {
       const userSkillLower = userSkill.toLowerCase().trim();
       
-      // Check skillToCareerMap for matching careers
-      Object.entries(skillToCareerMap).forEach(([skill, careerIds]) => {
-        if (isExactMatch(userSkillLower, skill.toLowerCase())) {
-          careerIds.forEach(id => skillBasedCareerIds.add(id));
+      // Check skillToCareerMap for exact matches
+      Object.entries(skillToCareerMap).forEach(([skillKey, careerIds]) => {
+        if (isExactMatch(userSkillLower, skillKey)) {
+          careerIds.forEach(careerId => {
+            skillMatchCount.set(careerId, (skillMatchCount.get(careerId) || 0) + 1);
+          });
         }
       });
       
-      // Also check against required skills
+      // Also check against career's required skills for exact matches
       career.requiredSkills.forEach(reqSkill => {
-        if (isExactMatch(userSkillLower, reqSkill.toLowerCase())) {
-          skillBasedCareerIds.add(career.id);
+        if (isExactMatch(userSkillLower, reqSkill)) {
+          skillMatchCount.set(career.id, (skillMatchCount.get(career.id) || 0) + 1);
         }
       });
     });
     
-    // If this career matches user's skills
-    if (skillBasedCareerIds.has(career.id)) {
-      const matchingSkills = assessment.currentSkills.filter(userSkill => {
-        return career.requiredSkills.some(reqSkill => 
-          isExactMatch(userSkill, reqSkill)
-        ) || Object.entries(skillToCareerMap).some(([skill, careerIds]) => 
-          isExactMatch(userSkill, skill) && careerIds.includes(career.id)
-        );
-      });
+    // Calculate score if this career has skill matches
+    if (skillMatchCount.has(career.id)) {
+      const matches = skillMatchCount.get(career.id) || 0;
+      // More matches = higher score
+      skillScore = Math.min(100, (matches / Math.min(assessment.currentSkills.length, 4)) * 100);
       
-      if (matchingSkills.length > 0) {
-        skillScore = Math.min(100, (matchingSkills.length / Math.max(career.requiredSkills.length, 3)) * 100);
-      } else {
-        skillScore = 50; // Some skill relevance even without exact match
+      // Bonus for careers with many matching skills
+      if (matches >= 2) {
+        skillScore = Math.min(100, skillScore * 1.2);
       }
     }
   }
