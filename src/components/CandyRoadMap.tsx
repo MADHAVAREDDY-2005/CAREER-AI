@@ -285,10 +285,9 @@ const CandyRoadMap = ({ career, onBack }: CandyRoadMapProps) => {
             variant="outline" 
             onClick={onBack}
             className="border-2 hover:bg-primary/5 bg-white"
-            disabled={hasStartedRoadmap}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            {hasStartedRoadmap ? 'Complete to Go Back' : 'Back'}
+            Back
           </Button>
           <h1 className="text-3xl font-bold text-foreground drop-shadow-sm">{career.title} Journey</h1>
           <div className="w-20"></div>

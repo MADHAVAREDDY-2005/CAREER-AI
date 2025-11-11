@@ -29,17 +29,6 @@ const Index = () => {
   };
 
   const handleBackToRecommendations = () => {
-    // Check if user has started any roadmap
-    const stored = localStorage.getItem('career_roadmap_progress');
-    if (stored) {
-      const allProgress = JSON.parse(stored);
-      const hasAnyProgress = allProgress.some((p: any) => p.completedNodeIds.length > 0);
-      
-      if (hasAnyProgress) {
-        // Don't allow going back if progress exists
-        return;
-      }
-    }
     setCurrentStep('recommendations');
   };
 
