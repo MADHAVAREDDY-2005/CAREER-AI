@@ -26,18 +26,19 @@ import { toast } from '@/hooks/use-toast';
 
 interface CandyRoadMapProps {
   career: Career;
+  experienceLevel: 'beginner' | 'intermediate' | 'advanced';
   onBack: () => void;
 }
 
 // Storage key for localStorage
 const STORAGE_KEY = 'career_roadmap_progress';
 
-// Convert career roadmap to node structure
-const convertToNodes = (career: Career): RoadmapNode[] => {
+// Convert career roadmap to node structure based on experience level
+const convertToNodes = (career: Career, experienceLevel: 'beginner' | 'intermediate' | 'advanced'): RoadmapNode[] => {
   const nodes: RoadmapNode[] = [];
   let nodeIndex = 0;
 
-  // Beginner phase
+  // Beginner phase - Always included for all levels
   career.roadmap.beginner.skills.forEach((skill, idx) => {
     nodes.push({
       id: `beginner-skill-${nodeIndex}`,
@@ -76,83 +77,87 @@ const convertToNodes = (career: Career): RoadmapNode[] => {
     nodeIndex++;
   });
 
-  // Intermediate phase
-  career.roadmap.intermediate.skills.forEach((skill, idx) => {
-    nodes.push({
-      id: `intermediate-skill-${nodeIndex}`,
-      type: 'skill',
-      title: skill,
-      description: `Level up with ${skill} to build more complex applications.`,
-      theory: `${skill} builds upon your foundational knowledge and introduces more advanced concepts. At this level, focus on understanding design patterns, best practices, and how to write maintainable code. Study real-world examples and understand how professionals use this skill in production environments.`,
-      youtubeId: extractYouTubeId(career.roadmap.intermediate.courses[0] || ''),
-      resources: career.roadmap.intermediate.courses.map(course => ({
-        title: course.split('(')[0].trim(),
-        url: extractUrl(course),
-        type: 'course' as const,
-        isFree: true
-      })),
-      estimatedHours: 20 + idx * 8
+  // Intermediate phase - Only for intermediate and advanced users
+  if (experienceLevel === 'intermediate' || experienceLevel === 'advanced') {
+    career.roadmap.intermediate.skills.forEach((skill, idx) => {
+      nodes.push({
+        id: `intermediate-skill-${nodeIndex}`,
+        type: 'skill',
+        title: skill,
+        description: `Level up with ${skill} to build more complex applications.`,
+        theory: `${skill} builds upon your foundational knowledge and introduces more advanced concepts. At this level, focus on understanding design patterns, best practices, and how to write maintainable code. Study real-world examples and understand how professionals use this skill in production environments.`,
+        youtubeId: extractYouTubeId(career.roadmap.intermediate.courses[0] || ''),
+        resources: career.roadmap.intermediate.courses.map(course => ({
+          title: course.split('(')[0].trim(),
+          url: extractUrl(course),
+          type: 'course' as const,
+          isFree: true
+        })),
+        estimatedHours: 20 + idx * 8
+      });
+      nodeIndex++;
     });
-    nodeIndex++;
-  });
 
-  career.roadmap.intermediate.projects.forEach((project, idx) => {
-    nodes.push({
-      id: `intermediate-project-${nodeIndex}`,
-      type: 'project',
-      title: project,
-      description: `Apply your intermediate skills: ${career.roadmap.intermediate.skills.join(', ')}.`,
-      theory: `At this intermediate level, focus on building more complex applications that solve real problems. Pay attention to code organization, best practices, and user experience. This is where you start thinking like a professional developer.`,
-      youtubeId: 'dQw4w9WgXcQ', // Placeholder
-      resources: [{
-        title: 'Intermediate Projects',
-        url: 'https://github.com/topics/project-ideas',
-        type: 'article',
-        isFree: true
-      }],
-      estimatedHours: 25 + idx * 10
+    career.roadmap.intermediate.projects.forEach((project, idx) => {
+      nodes.push({
+        id: `intermediate-project-${nodeIndex}`,
+        type: 'project',
+        title: project,
+        description: `Apply your intermediate skills: ${career.roadmap.intermediate.skills.join(', ')}.`,
+        theory: `At this intermediate level, focus on building more complex applications that solve real problems. Pay attention to code organization, best practices, and user experience. This is where you start thinking like a professional developer.`,
+        youtubeId: 'dQw4w9WgXcQ', // Placeholder
+        resources: [{
+          title: 'Intermediate Projects',
+          url: 'https://github.com/topics/project-ideas',
+          type: 'article',
+          isFree: true
+        }],
+        estimatedHours: 25 + idx * 10
+      });
+      nodeIndex++;
     });
-    nodeIndex++;
-  });
+  }
 
-  // Advanced phase
-  career.roadmap.advanced.skills.forEach((skill, idx) => {
-    nodes.push({
-      id: `advanced-skill-${nodeIndex}`,
-      type: 'skill',
-      title: skill,
-      description: `Master advanced ${skill} for professional-grade applications.`,
-      theory: `${skill} represents advanced expertise in ${career.title}. At this level, you should understand not just how to use the technology, but when and why to use it. Study system design, performance optimization, security considerations, and scalability. Master the trade-offs and decision-making processes that professionals use.`,
-      youtubeId: extractYouTubeId(career.roadmap.advanced.courses[0] || ''),
-      resources: career.roadmap.advanced.courses.map(course => ({
-        title: course.split('(')[0].trim(),
-        url: extractUrl(course),
-        type: 'course' as const,
-        isFree: true
-      })),
-      estimatedHours: 30 + idx * 12
+  // Advanced phase - Only for advanced users
+  if (experienceLevel === 'advanced') {
+    career.roadmap.advanced.skills.forEach((skill, idx) => {
+      nodes.push({
+        id: `advanced-skill-${nodeIndex}`,
+        type: 'skill',
+        title: skill,
+        description: `Master advanced ${skill} for professional-grade applications.`,
+        theory: `${skill} represents advanced expertise in ${career.title}. At this level, you should understand not just how to use the technology, but when and why to use it. Study system design, performance optimization, security considerations, and scalability. Master the trade-offs and decision-making processes that professionals use.`,
+        youtubeId: extractYouTubeId(career.roadmap.advanced.courses[0] || ''),
+        resources: career.roadmap.advanced.courses.map(course => ({
+          title: course.split('(')[0].trim(),
+          url: extractUrl(course),
+          type: 'course' as const,
+          isFree: true
+        })),
+        estimatedHours: 30 + idx * 12
+      });
+      nodeIndex++;
     });
-    nodeIndex++;
-  });
 
-  career.roadmap.advanced.projects.forEach((project, idx) => {
-    nodes.push({
-      id: `advanced-project-${nodeIndex}`,
-      type: 'project',
-      title: project,
-      description: `Showcase your expertise with this advanced project using ${career.roadmap.advanced.skills.join(', ')}.`,
-      theory: `Advanced projects are your opportunity to demonstrate mastery and build portfolio-worthy applications. Focus on scalability, performance, testing, and production-ready code. These projects should showcase your ability to architect and deliver professional-grade solutions.`,
-      youtubeId: 'dQw4w9WgXcQ', // Placeholder
-      resources: [{
-        title: 'Advanced Project Ideas',
-        url: 'https://github.com/practical-tutorials/project-based-learning',
-        type: 'article',
-        isFree: true
-      }],
-      estimatedHours: 40 + idx * 15
+    career.roadmap.advanced.projects.forEach((project, idx) => {
+      nodes.push({
+        id: `advanced-project-${nodeIndex}`,
+        type: 'project',
+        title: project,
+        description: `Showcase your expertise with this advanced project using ${career.roadmap.advanced.skills.join(', ')}.`,
+        theory: `Advanced projects are your opportunity to demonstrate mastery and build portfolio-worthy applications. Focus on scalability, performance, testing, and production-ready code. These projects should showcase your ability to architect and deliver professional-grade solutions.`,
+        youtubeId: 'dQw4w9WgXcQ', // Placeholder
+        resources: [{
+          title: 'Advanced Project Ideas',
+          url: 'https://github.com/practical-tutorials/project-based-learning',
+          type: 'article',
+          isFree: true
+        }],
+        estimatedHours: 40 + idx * 15
+      });
+      nodeIndex++;
     });
-    nodeIndex++;
-  });
+  }
 
   return nodes;
 };
@@ -170,8 +175,8 @@ const extractUrl = (courseString: string): string => {
   return urlMatch ? urlMatch[0] : '';
 };
 
-const CandyRoadMap = ({ career, onBack }: CandyRoadMapProps) => {
-  const [nodes] = useState<RoadmapNode[]>(() => convertToNodes(career));
+const CandyRoadMap = ({ career, experienceLevel, onBack }: CandyRoadMapProps) => {
+  const [nodes] = useState<RoadmapNode[]>(() => convertToNodes(career, experienceLevel));
   const [selectedNode, setSelectedNode] = useState<RoadmapNode | null>(null);
   const [progress, setProgress] = useState<RoadmapProgress>(() => {
     // Load progress from localStorage
@@ -291,6 +296,13 @@ const CandyRoadMap = ({ career, onBack }: CandyRoadMapProps) => {
           </Button>
           <h1 className="text-3xl font-bold text-foreground drop-shadow-sm">{career.title} Journey</h1>
           <div className="w-20"></div>
+        </div>
+
+        {/* Level Badge */}
+        <div className="flex justify-center mb-6">
+          <Badge className="text-lg px-6 py-2 bg-gradient-to-r from-primary to-secondary text-white">
+            {experienceLevel.charAt(0).toUpperCase() + experienceLevel.slice(1)} Level Roadmap
+          </Badge>
         </div>
 
         {/* Progress Card */}

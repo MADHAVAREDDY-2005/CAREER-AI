@@ -53,9 +53,10 @@ const Index = () => {
         />
       )}
       
-      {currentStep === 'roadmap' && selectedCareer && (
+      {currentStep === 'roadmap' && selectedCareer && assessmentData && (
         <CandyRoadMap 
           career={selectedCareer}
+          experienceLevel={assessmentData.experienceLevel}
           onBack={handleBackToRecommendations}
         />
       )}
