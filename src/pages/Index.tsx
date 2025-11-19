@@ -1,21 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import HeroSection from '@/components/HeroSection';
 import AssessmentForm from '@/components/AssessmentForm';
 import CareerRecommendations from '@/components/CareerRecommendations';
-import VisualRoadmap from '@/components/VisualRoadmap';
-import AuthManager from '@/components/AuthManager';
+import CandyRoadMap from '@/components/CandyRoadMap';
 import { AssessmentData, Career } from '@/types/career';
-import { isLoggedIn, getAuth } from '@/lib/storage';
 
 const Index = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentStep, setCurrentStep] = useState<'hero' | 'assessment' | 'recommendations' | 'roadmap'>('hero');
   const [assessmentData, setAssessmentData] = useState<AssessmentData | null>(null);
   const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
-
-  useEffect(() => {
-    setIsAuthenticated(isLoggedIn());
-  }, []);
 
   const handleStartAssessment = () => {
     setCurrentStep('assessment');
@@ -41,13 +34,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      {!isAuthenticated ? (
-        <AuthManager onAuthSuccess={() => setIsAuthenticated(true)} />
-      ) : (
-        <>
-          {currentStep === 'hero' && (
-            <HeroSection onStartAssessment={handleStartAssessment} />
-          )}
+      {currentStep === 'hero' && (
+        <HeroSection onStartAssessment={handleStartAssessment} />
+      )}
       
       {currentStep === 'assessment' && (
         <AssessmentForm 
@@ -65,13 +54,11 @@ const Index = () => {
       )}
       
       {currentStep === 'roadmap' && selectedCareer && assessmentData && (
-        <VisualRoadmap
+        <CandyRoadMap 
           career={selectedCareer}
           experienceLevel={assessmentData.experienceLevel}
           onBack={handleBackToRecommendations}
         />
-      )}
-        </>
       )}
     </div>
   );
