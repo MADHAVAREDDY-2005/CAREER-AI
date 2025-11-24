@@ -905,3 +905,16 @@ export const generateCareerRecommendations = async (assessment: AssessmentData):
   // Return top 6 matches (or all if less than 6)
   return sortedCareers.slice(0, 6);
 };
+
+/**
+ * Get career by title (for locked domain lookup)
+ * @param title - Career title to find
+ * @returns Career object with 100% match, or undefined if not found
+ */
+export const getCareerById = (title: string): Career | undefined => {
+  const career = careerDatabase.find(c => c.title === title);
+  if (career) {
+    return { ...career, matchPercentage: 100 }; // Locked career is 100% match
+  }
+  return undefined;
+};

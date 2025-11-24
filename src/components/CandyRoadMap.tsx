@@ -207,19 +207,27 @@ const CandyRoadMap = ({ career, experienceLevel, onBack }: CandyRoadMapProps) =>
 
   const [showCompletionModal, setShowCompletionModal] = useState(false);
   const [isRoadmapLocked, setIsRoadmapLocked] = useState(false);
+  const [showStartButton, setShowStartButton] = useState(true);
 
-  // Lock domain when user views a roadmap
+  // Check if domain is already locked
   useEffect(() => {
+    if (user?.selectedDomain) {
+      setIsDomainLocked(true);
+      setShowStartButton(false);
+    }
+  }, [user?.selectedDomain]);
+
+  // Handle Start Learning button click
+  const handleStartLearning = () => {
     if (user && !user.selectedDomain) {
       updateUser({ selectedDomain: career.title });
       setIsDomainLocked(true);
-      sonnerToast.success(`Domain locked to ${career.title}!`, {
-        description: 'Focus on mastering your chosen path.',
+      setShowStartButton(false);
+      sonnerToast.success(`🎯 Domain locked to ${career.title}!`, {
+        description: 'PICK ONE. MASTER IT! Focus on completing this path.',
       });
-    } else if (user?.selectedDomain) {
-      setIsDomainLocked(true);
     }
-  }, [career.title, user, updateUser]);
+  };
 
   // Check if user has started this roadmap (has any progress)
   const hasStartedRoadmap = progress.completedNodeIds.length > 0;
@@ -332,29 +340,57 @@ const CandyRoadMap = ({ career, experienceLevel, onBack }: CandyRoadMapProps) =>
           </Badge>
         </div>
 
-        {/* Progress Card */}
-        <Card className="p-6 mb-12 border-2 shadow-lg bg-white/95 backdrop-blur">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h2 className="text-2xl font-bold text-foreground flex items-center gap-2">
-                <Sparkles className="w-6 h-6 text-primary" />
-                Your Progress
+        {/* Start Learning Button - Only show if domain not locked */}
+        {showStartButton && !isDomainLocked && (
+          <Card className="p-8 mb-12 border-2 shadow-2xl bg-gradient-to-br from-primary/10 via-white to-secondary/10 backdrop-blur">
+            <div className="text-center">
+              <Trophy className="w-16 h-16 mx-auto mb-4 text-primary" />
+              <h2 className="text-3xl font-bold text-foreground mb-3">
+                Ready to Start Your Journey?
               </h2>
-              <p className="text-muted-foreground mt-1">
-                {progress.completedNodeIds.length} of {nodes.length} steps completed
+              <p className="text-xl text-muted-foreground mb-2">
+                🖤 PICK ONE. MASTER IT!
               </p>
-              {hasStartedRoadmap && (
-                <p className="text-xs text-amber-600 mt-2 font-medium">
-                  🔒 Complete this roadmap to explore other careers
+              <p className="text-sm text-muted-foreground mb-6">
+                Once you start, you'll be committed to completing this path before exploring others.
+              </p>
+              <Button 
+                size="lg" 
+                onClick={handleStartLearning}
+                className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all"
+              >
+                <Play className="w-5 h-5 mr-2" />
+                Start Learning
+              </Button>
+            </div>
+          </Card>
+        )}
+
+        {/* Progress Card - Only show after starting */}
+        {!showStartButton && (
+          <Card className="p-6 mb-12 border-2 shadow-lg bg-white/95 backdrop-blur">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="text-2xl font-bold text-foreground flex items-center gap-2">
+                  <Sparkles className="w-6 h-6 text-primary" />
+                  Your Progress
+                </h2>
+                <p className="text-muted-foreground mt-1">
+                  {progress.completedNodeIds.length} of {nodes.length} steps completed
                 </p>
-              )}
+                {hasStartedRoadmap && (
+                  <p className="text-xs text-amber-600 mt-2 font-medium">
+                    🔒 Complete this roadmap to explore other careers
+                  </p>
+                )}
+              </div>
+              <div className="text-right">
+                <div className="text-5xl font-bold text-primary">{progress.percentComplete}%</div>
+              </div>
             </div>
-            <div className="text-right">
-              <div className="text-5xl font-bold text-primary">{progress.percentComplete}%</div>
-            </div>
-          </div>
-          <Progress value={progress.percentComplete} className="h-4" />
-        </Card>
+            <Progress value={progress.percentComplete} className="h-4" />
+          </Card>
+        )}
 
         {/* 3D Mountain Road Roadmap */}
         <div className="relative min-h-[3000px]">
