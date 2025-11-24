@@ -15,7 +15,14 @@ const Dashboard = () => {
   };
 
   const handleContinueLearning = () => {
-    navigate('/');
+    // If domain is locked, show a message and stay on dashboard
+    if (user?.selectedDomain) {
+      // Navigate to Index page which will show the locked domain screen
+      navigate('/');
+    } else {
+      // Otherwise go to start assessment
+      navigate('/');
+    }
   };
 
   if (!user) {
@@ -78,15 +85,29 @@ const Dashboard = () => {
             <CardDescription>Track your progress and achievements</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">Selected Domain</span>
-                {user.selectedDomain ? (
-                  <Badge variant="default">{user.selectedDomain}</Badge>
-                ) : (
-                  <Badge variant="outline">Not selected yet</Badge>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium">Selected Domain</span>
+                  {user.selectedDomain ? (
+                    <Badge variant="default" className="bg-primary/20 text-primary border border-primary/30">
+                      <span>{user.selectedDomain}</span>
+                      <span className="ml-2">🔒</span>
+                    </Badge>
+                  ) : (
+                    <Badge variant="outline">Not selected yet</Badge>
+                  )}
+                </div>
+                
+                {user.selectedDomain && (
+                  <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 mt-2">
+                    <p className="text-xs text-primary font-semibold mb-1">
+                      🖤 PICK ONE. MASTER IT!
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Your domain is locked. Focus on mastering {user.selectedDomain}.
+                    </p>
+                  </div>
                 )}
-              </div>
               
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">

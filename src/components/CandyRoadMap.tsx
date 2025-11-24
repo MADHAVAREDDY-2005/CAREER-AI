@@ -5,6 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -23,6 +24,8 @@ import {
 import { Career } from '@/types/career';
 import { RoadmapNode, RoadmapProgress } from '@/types/roadmap';
 import { toast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast as sonnerToast } from 'sonner';
 
 interface CandyRoadMapProps {
   career: Career;
@@ -176,8 +179,11 @@ const extractUrl = (courseString: string): string => {
 };
 
 const CandyRoadMap = ({ career, experienceLevel, onBack }: CandyRoadMapProps) => {
+  const { user, updateUser } = useAuth();
+  const navigate = useNavigate();
   const [nodes] = useState<RoadmapNode[]>(() => convertToNodes(career, experienceLevel));
   const [selectedNode, setSelectedNode] = useState<RoadmapNode | null>(null);
+  const [isDomainLocked, setIsDomainLocked] = useState(false);
   const [progress, setProgress] = useState<RoadmapProgress>(() => {
     // Load progress from localStorage
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -201,6 +207,19 @@ const CandyRoadMap = ({ career, experienceLevel, onBack }: CandyRoadMapProps) =>
 
   const [showCompletionModal, setShowCompletionModal] = useState(false);
   const [isRoadmapLocked, setIsRoadmapLocked] = useState(false);
+
+  // Lock domain when user views a roadmap
+  useEffect(() => {
+    if (user && !user.selectedDomain) {
+      updateUser({ selectedDomain: career.title });
+      setIsDomainLocked(true);
+      sonnerToast.success(`Domain locked to ${career.title}!`, {
+        description: 'Focus on mastering your chosen path.',
+      });
+    } else if (user?.selectedDomain) {
+      setIsDomainLocked(true);
+    }
+  }, [career.title, user, updateUser]);
 
   // Check if user has started this roadmap (has any progress)
   const hasStartedRoadmap = progress.completedNodeIds.length > 0;
@@ -288,13 +307,21 @@ const CandyRoadMap = ({ career, experienceLevel, onBack }: CandyRoadMapProps) =>
         <div className="flex items-center justify-between mb-8">
           <Button 
             variant="outline" 
-            onClick={onBack}
+            onClick={() => navigate('/dashboard')}
             className="border-2 hover:bg-primary/5 bg-white"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
+            Back to Dashboard
           </Button>
-          <h1 className="text-3xl font-bold text-foreground drop-shadow-sm">{career.title} Journey</h1>
+          <div className="flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-foreground drop-shadow-sm">{career.title} Journey</h1>
+            {isDomainLocked && (
+              <Badge variant="default" className="bg-primary/20 text-primary border border-primary/30">
+                <Lock className="w-3 h-3 mr-1" />
+                Locked
+              </Badge>
+            )}
+          </div>
           <div className="w-20"></div>
         </div>
 
