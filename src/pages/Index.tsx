@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeroSection from '@/components/HeroSection';
 import AssessmentForm from '@/components/AssessmentForm';
@@ -10,6 +10,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Lock, ArrowRight } from 'lucide-react';
+import { getCareerById } from '@/lib/careerEngine';
 
 const Index = () => {
   const { user } = useAuth();
@@ -17,6 +18,17 @@ const Index = () => {
   const [currentStep, setCurrentStep] = useState<'hero' | 'assessment' | 'quote' | 'recommendations' | 'roadmap'>('hero');
   const [assessmentData, setAssessmentData] = useState<AssessmentData | null>(null);
   const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
+
+  // Auto-load roadmap if user has locked domain and navigates here
+  useEffect(() => {
+    if (user?.selectedDomain && currentStep === 'hero') {
+      const lockedCareer = getCareerById(user.selectedDomain);
+      if (lockedCareer) {
+        setSelectedCareer(lockedCareer);
+        setCurrentStep('roadmap');
+      }
+    }
+  }, [user?.selectedDomain, currentStep]);
 
   const handleStartAssessment = () => {
     setCurrentStep('assessment');

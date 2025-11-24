@@ -15,14 +15,8 @@ const Dashboard = () => {
   };
 
   const handleContinueLearning = () => {
-    // If domain is locked, show a message and stay on dashboard
-    if (user?.selectedDomain) {
-      // Navigate to Index page which will show the locked domain screen
-      navigate('/');
-    } else {
-      // Otherwise go to start assessment
-      navigate('/');
-    }
+    // Navigate back to index, which will auto-load the roadmap for locked domain
+    navigate('/');
   };
 
   if (!user) {
