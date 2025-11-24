@@ -858,15 +858,16 @@ const calculateMatchPercentage = (career: Omit<Career, 'matchPercentage'>, asses
   }
   
   // Calculate weighted final score
+  // SKILLS are now PRIMARY (70%), INTERESTS are secondary (30%)
   if (assessment.interests.length > 0 && assessment.currentSkills.length > 0) {
-    // When both interests and skills are provided
-    score = (interestScore * 0.7) + (skillScore * 0.3);
-  } else if (assessment.interests.length > 0) {
-    // When only interests are provided, they dominate
-    score = interestScore;
+    // When both interests and skills are provided - Skills are weighted more heavily
+    score = (skillScore * 0.7) + (interestScore * 0.3);
   } else if (assessment.currentSkills.length > 0) {
     // When only skills are provided, they become primary
     score = skillScore;
+  } else if (assessment.interests.length > 0) {
+    // When only interests are provided, use them
+    score = interestScore;
   } else {
     score = 0;
   }
