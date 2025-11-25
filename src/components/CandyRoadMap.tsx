@@ -219,7 +219,18 @@ const CandyRoadMap = ({ career, experienceLevel, onBack }: CandyRoadMapProps) =>
 
   // Handle Start Learning button click
   const handleStartLearning = () => {
-    if (user && !user.selectedDomain) {
+    if (!user) {
+      sonnerToast.error("Please sign in to start learning", {
+        description: "You need an account to track your progress and lock your learning path.",
+        action: {
+          label: "Sign In",
+          onClick: () => navigate('/login')
+        }
+      });
+      return;
+    }
+    
+    if (!user.selectedDomain) {
       updateUser({ selectedDomain: career.title });
       setIsDomainLocked(true);
       setShowStartButton(false);
@@ -360,7 +371,7 @@ const CandyRoadMap = ({ career, experienceLevel, onBack }: CandyRoadMapProps) =>
                 className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all"
               >
                 <Play className="w-5 h-5 mr-2" />
-                Start Learning
+                {user ? 'Start Learning' : 'Sign In to Start Learning'}
               </Button>
             </div>
           </Card>

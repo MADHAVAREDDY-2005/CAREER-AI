@@ -100,6 +100,18 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+      {/* Auth Buttons - Top Right (only show on public pages, not roadmap) */}
+      {!user && currentStep !== 'roadmap' && (
+        <div className="fixed top-4 right-4 z-50 flex gap-2">
+          <Button variant="outline" onClick={() => navigate('/login')}>
+            Sign In
+          </Button>
+          <Button onClick={() => navigate('/signup')}>
+            Sign Up
+          </Button>
+        </div>
+      )}
+
       {currentStep === 'hero' && (
         <HeroSection onStartAssessment={handleStartAssessment} />
       )}
